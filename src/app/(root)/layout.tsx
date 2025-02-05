@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: 'Chime',
-  description: 'Социальная сеть Chime',
+  title: 'Map Designer | Home',
+  description: 'Create and share maps',
 };
 
 export default function HomeLayout({
