@@ -1,6 +1,7 @@
 import React from 'react';
-import { ContentHeader, TabContent, TabsHeader } from './components';
+import { ContentHeader, TabsContentContainer, TabsHeader } from './components';
 import { Tabs } from '@/components/ui';
+import { CreateMapPopup } from '../create-map-popup';
 
 export const PersonalTabs: React.FC = () => {
   const array = [...Array(5)];
@@ -9,10 +10,11 @@ export const PersonalTabs: React.FC = () => {
     <Tabs defaultValue="projects" className="w-full">
       <TabsHeader />
 
-      <div className="mx-5 bg-white shadow-md rounded-[10px]">
+      <div className="mx-5 bg-background shadow-md rounded-[10px]">
         <ContentHeader title="Созданные" />
 
-        <TabContent array={array} />
+        <TabsContentContainer array={array} />
+        <CreateMapPopup />
       </div>
     </Tabs>
   );

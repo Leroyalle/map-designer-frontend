@@ -13,7 +13,7 @@ interface Props {
   array: string[];
 }
 
-export const TabContent: React.FC<Props> = ({ array }) => {
+export const TabsContentContainer: React.FC<Props> = ({ array }) => {
   return (
     <>
       <TabsContent value="projects" className="p-5">

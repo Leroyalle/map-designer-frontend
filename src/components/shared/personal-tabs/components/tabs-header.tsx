@@ -8,7 +8,7 @@ export const TabsHeader: React.FC = () => {
     <div className="flex justify-between items-center m-5 gap-5 ">
       <div className="flex-1 rounded-[10px] p-3 shadow-md flex ">
         <TabsList className="justify-start h-auto  p-0 bg-transparent ">
-          <TabTrigger value="projects" className="mr-4 font-semibold">
+          <TabTrigger value="projects" className="mr-4">
             <Map strokeWidth={1.3} size={20} className="mr-3.5 " />
             Мои проекты
           </TabTrigger>
