@@ -1,21 +1,19 @@
 'use client';
 import React from 'react';
 import { TabsContentContainer, TabsHeader } from './components';
-import { Container, Tabs } from '@/components/ui';
+import { Tabs } from '@/components/ui';
 import { CreateMapPopup } from '../modals';
 
 export const PersonalPageWrapper: React.FC = () => {
   const projects: string[] = [...Array(4).fill('')];
 
   return (
-    <Container>
-      <Tabs defaultValue="projects" className="w-full">
-        <TabsHeader />
-        <div className="mx-5 bg-background shadow-md rounded-[10px]">
-          <TabsContentContainer projects={projects} />
-          <CreateMapPopup />
-        </div>
-      </Tabs>
-    </Container>
+    <Tabs defaultValue="projects" className="w-full">
+      <TabsHeader />
+      <div className="mx-5 bg-background shadow-md rounded-[10px]">
+        <TabsContentContainer projects={projects} />
+        <CreateMapPopup />
+      </div>
+    </Tabs>
   );
 };
