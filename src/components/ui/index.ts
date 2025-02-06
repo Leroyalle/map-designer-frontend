@@ -5,6 +5,8 @@ export { Input } from './input';
 export { Label } from './label';
 export { Typography } from './typography';
 export { Checkbox } from './checkbox';
+export { ObjectParamsInput } from './object-params-input';
+export * from './select';
 export * from './dialog';
 export * from './card';
 export * from './tabs';
