@@ -66,7 +66,7 @@ export const Register: React.FC<Props> = ({ className }) => {
               changeCallValue={() => setNeedCallValue(!needCallValue)}
             />
           </div>
-          <Button type="submit" className="w-full mt-10 py-[25px]">
+          <Button type="submit" className="w-full mt-10 py-[25px]" disabled={!isConfirmed}>
             Создать аккаунт
           </Button>
           <ConfirmDocuments
