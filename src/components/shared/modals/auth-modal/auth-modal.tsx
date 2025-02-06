@@ -1,6 +1,5 @@
 'use client';
 import React from 'react';
-
 import { Register, Login } from '../../forms';
 import { Modal, ModalBody, ModalContent, Tab, Tabs } from '@heroui/react';
 

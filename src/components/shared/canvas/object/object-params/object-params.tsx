@@ -38,8 +38,8 @@ export const ObjectParams: React.FC<Props> = ({ className }) => {
   };
   return (
     <Card className={cn('bg-[#262626] max-w-36 border-0', className)}>
-      <CardHeader className="text-background  flex flex-row items-center justify-between">
-        <CardTitle className="font-medium ">О помещении</CardTitle>
+      <CardHeader className="text-background flex flex-row items-center justify-between">
+        <CardTitle className="font-medium">О помещении</CardTitle>
 
         <Select>
           <SelectTrigger className="select-none focus:outline-0 border-none focus:ring-0 rouded-[5px] w-[220px]">
@@ -55,9 +55,9 @@ export const ObjectParams: React.FC<Props> = ({ className }) => {
       <CardContent className="flex flex-col gap-4">
         <ObjectParamsInput placeholder="Название" />
 
-        <div className="text-background  border-dashed border-2 rounded-sm ">
-          <label htmlFor="imageUpload" className="flex gap-x-[10px] cursor-pointer ">
-            <div className="rounded-full  w-7 h-7 bg-red-500 flex-shrink-0">
+        <div className="text-background border-dashed border-2 rounded-sm">
+          <label htmlFor="imageUpload" className="flex gap-x-[10px] cursor-pointer">
+            <div className="rounded-full w-7 h-7 bg-red-500 flex-shrink-0">
               <Paperclip />
             </div>
             <div className="flex flex-col">
@@ -80,7 +80,7 @@ export const ObjectParams: React.FC<Props> = ({ className }) => {
           maxLength={80}
         />
         <textarea
-          className=" resize-none rounded-[5px] border-[1.5px] font-medium py-2 px-4 border-[#5A5A5A] bg-[#373737] text-background placeholder:text-background/75 outline-0"
+          className="resize-none rounded-[5px] border-[1.5px] font-medium py-2 px-4 border-[#5A5A5A] bg-[#373737] text-background placeholder:text-background/75 outline-0"
           placeholder="Подробное описание (240 символов)"
           maxLength={240}
         />
