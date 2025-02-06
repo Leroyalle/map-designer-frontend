@@ -11,7 +11,9 @@ interface Props {
 export const NewMapButton: React.FC<Props> = ({ className }) => {
   const { onChange } = useAppContext();
   return (
-    <Card className={cn('bg-gray-200/15 rounded-[10px] h-40', className)} onClick={onChange}>
+    <Card
+      className={cn('bg-gray-200/15 rounded-[10px] cursor-pointer h-40', className)}
+      onClick={onChange}>
       <CardContent className="flex flex-col items-center justify-center text-foreground/30 h-full">
         <Plus size={26} />
         <span className="font-medium">Новая карта</span>
