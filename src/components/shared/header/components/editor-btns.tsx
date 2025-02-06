@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui';
+import { Button, Typography } from '@/components/ui';
 import { Eye } from 'lucide-react';
 import React from 'react';
 
@@ -12,7 +12,7 @@ export const EditorBtns: React.FC = () => {
         <>
           <Button variant="ghost">
             <Eye />
-            <p>Предпросмотр</p>
+            <Typography>Предпросмотр</Typography>
           </Button>
           <Button>Опубликовать</Button>
         </>

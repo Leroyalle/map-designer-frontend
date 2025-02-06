@@ -21,14 +21,14 @@ export const ConfirmDocuments: React.FC<Props> = ({
   return (
     <div className={cn('flex flex-col gap-y-[25px]', className)}>
       <div className="flex items-center gap-x-[10px]">
-        <Checkbox checked={isConfirmed} onChange={onConfirm} />
+        <Checkbox checked={isConfirmed} onClick={onConfirm} />
         <Typography>
           Я принимаю <Link>Лицензионное соглашение</Link> и соглашаюсь на{' '}
           <Link>обработку персональных</Link> данных
         </Typography>
       </div>
       <div className="flex items-center gap-x-[10px]">
-        <Checkbox checked={isSubscribed} onChange={onSubscribe} />
+        <Checkbox checked={isSubscribed} onClick={onSubscribe} />
         <Typography>
           Я соглашаюсь получать рекламно-информационные материалы в соответствии с{' '}
           <Link>соглашением</Link>

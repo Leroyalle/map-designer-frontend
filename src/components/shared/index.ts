@@ -1,3 +1,3 @@
 export { Providers } from './providers';
 export { Header } from './header';
-export { PersonalTabs } from './personal-tabs';
+export { PersonalPageWrapper } from './personal-page';

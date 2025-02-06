@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Montserrat } from 'next/font/google';
 import './globals.css';
-import { Header, Providers } from '@/components/shared';
+import { Providers } from '@/components/shared';
 import { cn } from '@/lib/utils';
 
 const montserrat = Montserrat({
@@ -23,7 +23,6 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={cn(montserrat.className, 'min-h-screen')}>
-        <Header />
         <Providers>{children}</Providers>
       </body>
     </html>

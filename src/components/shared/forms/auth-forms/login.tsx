@@ -2,7 +2,6 @@ import { Button, Typography } from '@/components/ui';
 import React from 'react';
 import { AuthProviders, Copyright } from './components';
 import { Mail, Lock } from 'lucide-react';
-import { cn } from '@/lib/utils';
 import { FormProvider, useForm } from 'react-hook-form';
 import { loginSchema, TLoginSchema } from './schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -27,7 +26,7 @@ export const Login: React.FC<Props> = ({ className }) => {
   };
 
   return (
-    <div className={cn('max-h-[90vh] overflow-y-auto scrollbar', className)}>
+    <div className={className}>
       <div className="mb-10 flex flex-col gap-y-2">
         <h3 className="text-[24px] font-semibold">Войти в аккаунт</h3>
         <Typography className="text-base">Введите электронную почту и пароль</Typography>
@@ -57,7 +56,7 @@ export const Login: React.FC<Props> = ({ className }) => {
             <Button type="submit" className="w-full py-[25px]">
               Войти
             </Button>
-            <Button className="mx-auto" variant="link">
+            <Button type="button" className="mx-auto" variant="link">
               Забыли пароль?
             </Button>
           </div>

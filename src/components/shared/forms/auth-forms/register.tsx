@@ -1,8 +1,7 @@
-import { Button, Label, Switch, Typography } from '@/components/ui';
+import { Button, Typography } from '@/components/ui';
 import React, { useState } from 'react';
-import { AuthProviders, ConfirmDocuments, Copyright } from './components';
+import { AuthProviders, ConfirmDocuments, Copyright, OrderACall } from './components';
 import { Mail, User, Lock } from 'lucide-react';
-import { cn } from '@/lib/utils';
 import { FormProvider, useForm } from 'react-hook-form';
 import { registerSchema, TRegisterSchema } from './schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -31,7 +30,7 @@ export const Register: React.FC<Props> = ({ className }) => {
   };
 
   return (
-    <div className={cn('max-h-[90vh] overflow-y-auto scrollbar', className)}>
+    <div className={className}>
       <div className="mb-10 flex flex-col gap-y-2">
         <h3 className="text-[24px] font-semibold">Регистрация</h3>
         <Typography className="text-base">заполните форму, чтобы создать аккаунт</Typography>
@@ -62,22 +61,10 @@ export const Register: React.FC<Props> = ({ className }) => {
               startContent={<Lock className="text-foreground/40" />}
               placeholder="Пароль"
             />
-            <div className="flex items-start gap-x-5 border-1 border-gray-200 p-5 rounded-xl">
-              <Switch
-                id="order-a-call"
-                checked={needCallValue}
-                onClick={() => setNeedCallValue(!needCallValue)}
-              />
-              <div className="flex flex-col gap-y-5">
-                <Label className="text-foreground font-medium" htmlFor="order-a-call">
-                  Заказать обратный звонок
-                </Label>
-                <Typography>
-                  После регистрации наш менеджер свяжется <br /> с вами и ответит на все вопросы по
-                  сервису
-                </Typography>
-              </div>
-            </div>
+            <OrderACall
+              needCallValue={needCallValue}
+              changeCallValue={() => setNeedCallValue(!needCallValue)}
+            />
           </div>
           <Button type="submit" className="w-full mt-10 py-[25px]">
             Создать аккаунт

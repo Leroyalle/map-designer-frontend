@@ -2,6 +2,7 @@
 import React, { ReactNode } from 'react';
 import { ThemeProvider } from './theme-provider';
 import { HeroUIProvider } from '@heroui/react';
+import { ContextProvider } from './context-provider';
 
 interface Props {
   children: ReactNode;
@@ -10,7 +11,9 @@ interface Props {
 export const Providers: React.FC<Props> = ({ children }) => {
   return (
     <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
-      <HeroUIProvider>{children}</HeroUIProvider>
+      <ContextProvider>
+        <HeroUIProvider>{children}</HeroUIProvider>
+      </ContextProvider>
     </ThemeProvider>
   );
 };

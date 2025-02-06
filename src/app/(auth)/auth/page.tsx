@@ -1,9 +1,5 @@
-import { AuthModals } from '@/components/shared/modal';
+import { AuthModal } from '@/components/shared/modals';
 
 export default function Auth() {
-  return (
-    <main>
-      <AuthModals />
-    </main>
-  );
+  return <AuthModal />;
 }

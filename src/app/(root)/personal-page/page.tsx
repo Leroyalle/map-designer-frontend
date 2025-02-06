@@ -1,9 +1,5 @@
-import { PersonalTabs } from '@/components/shared';
+import { PersonalPageWrapper } from '@/components/shared';
 
 export default function PersonalPage() {
-  return (
-    <div className=" bg-[#FaFaFa] ">
-      <PersonalTabs />
-    </div>
-  );
+  return <PersonalPageWrapper />;
 }

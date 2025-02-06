@@ -5,29 +5,24 @@ import {
   CardHeader,
   CardTitle,
   TabsContent,
+  Typography,
 } from '@/components/ui';
 import React from 'react';
-import { PlanItem } from './plan-item';
+import { ContentHeader } from './content-header';
+import { MapsList } from './maps-list';
 
 interface Props {
-  array: string[];
+  projects: string[];
 }
 
-export const TabsContentContainer: React.FC<Props> = ({ array }) => {
+export const TabsContentContainer: React.FC<Props> = ({ projects }) => {
   return (
     <>
       <TabsContent value="projects" className="p-5">
-        <Card className="border-0 shadow-none">
-          <CardContent className="p-0">
-            <div className="grid grid-cols-1  sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
-              {array.map((_, index) => (
-                <PlanItem key={index} isFirst={index === 0} />
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+        <ContentHeader title="Созданные" />
+        <hr className="my-5" />
+        <MapsList items={projects} />
       </TabsContent>
-
       <TabsContent value="tariffs" className="p-5">
         <Card className="border-0 shadow-none">
           <CardHeader>
@@ -35,7 +30,7 @@ export const TabsContentContainer: React.FC<Props> = ({ array }) => {
             <CardDescription>Информация о доступных тарифах.</CardDescription>
           </CardHeader>
           <CardContent>
-            <p>Здесь будет информация о тарифах.</p>
+            <Typography>Здесь будет информация о тарифах.</Typography>
           </CardContent>
         </Card>
       </TabsContent>

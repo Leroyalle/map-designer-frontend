@@ -1,3 +1,4 @@
+import { Header } from '@/components/shared';
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
@@ -10,5 +11,10 @@ export default function HomeLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <main>{children}</main>;
+  return (
+    <>
+      <Header />
+      <main>{children}</main>;
+    </>
+  );
 }

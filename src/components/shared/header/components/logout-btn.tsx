@@ -1,3 +1,4 @@
+import { Button } from '@/components/ui';
 import React from 'react';
 
 interface Props {
@@ -7,7 +8,7 @@ interface Props {
 export const LogoutBtn: React.FC<Props> = ({ className }) => {
   return (
     <div className={className}>
-      <p>Выйти</p>
+      <Button variant="ghost">Выйти</Button>
     </div>
   );
 };
