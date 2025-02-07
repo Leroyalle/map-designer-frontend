@@ -7,7 +7,6 @@ export default function PersonalPage() {
   return (
     <Container>
       <PersonalPageWrapper />
-      <CanvasToolbar />
     </Container>
   );
 }

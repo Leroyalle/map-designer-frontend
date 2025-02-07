@@ -6,6 +6,7 @@ export { Label } from './label';
 export { Typography } from './typography';
 export { Checkbox } from './checkbox';
 export { ObjectParamsInput } from './object-params-input';
+export { FilteredInput } from './filtered-input';
 export { Toaster } from './sonner';
 export * from './select';
 export * from './dialog';
