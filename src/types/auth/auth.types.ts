@@ -12,6 +12,6 @@ export type VerifyUserType = {
   code: string;
 };
 
-export enum AuthTokens {
+export enum AuthTokensEnum {
   JWT = 'jwtToken',
 }

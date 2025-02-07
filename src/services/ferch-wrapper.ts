@@ -1,4 +1,4 @@
-import { AuthTokens } from '@/types';
+import { AuthTokensEnum } from '@/types';
 import Cookie from 'js-cookie';
 
 class FetchClient {
@@ -57,7 +57,7 @@ class FetchClient {
     headers?: Record<string, string>,
   ): Promise<T> {
     const url = `${this.API_URL}${path}`;
-    const jwtToken = Cookie.get(AuthTokens.JWT);
+    const jwtToken = Cookie.get(AuthTokensEnum.JWT);
     const authorizationHeader: HeadersInit =
       isAuth && jwtToken ? { Authorization: `Bearer ${jwtToken}` } : {};
 
