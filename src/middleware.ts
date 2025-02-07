@@ -5,9 +5,9 @@ export default async function middleware(req: NextRequest) {
   const token = req.cookies.get(AuthTokensEnum.JWT)?.value;
   const response = NextResponse.next();
 
-  if (!token) {
-    return NextResponse.redirect(new URL('/auth', req.url));
-  }
+  // if (!token) {
+  //   return NextResponse.redirect(new URL('/auth', req.url));
+  // }
 
   response.headers.set('Authorization', `Bearer ${token}`);
 
