@@ -6,12 +6,18 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { loginSchema, TLoginSchema } from './schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FormInput } from '../../form-input';
+import { toast } from 'sonner';
+import { authService } from '@/services';
+import { useRouter } from 'next/navigation';
+import { NavRoutesEnum } from '@/types';
+import { saveAuthCookie } from '@/lib';
 
 interface Props {
   className?: string;
 }
 
 export const Login: React.FC<Props> = ({ className }) => {
+  const router = useRouter();
   const form = useForm<TLoginSchema>({
     resolver: zodResolver(loginSchema),
     mode: 'onSubmit',
@@ -22,7 +28,17 @@ export const Login: React.FC<Props> = ({ className }) => {
   });
 
   const onSubmit = (data: TLoginSchema) => {
-    console.log(data);
+    toast.promise(authService.login(data), {
+      loading: 'Проверка...',
+      success: (res) => {
+        saveAuthCookie(res.token);
+        router.push(NavRoutesEnum.PROFILE);
+        form.setValue('email', '');
+        form.setValue('password', '');
+        return 'Успешный вход в аккаунт! Перевожу...';
+      },
+      error: 'Ошибка! Повторите попытку',
+    });
   };
 
   return (

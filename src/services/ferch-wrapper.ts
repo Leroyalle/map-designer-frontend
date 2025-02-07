@@ -2,7 +2,7 @@ import { AuthTokens } from '@/types';
 import Cookie from 'js-cookie';
 
 class FetchClient {
-  private API_URL = process.env.API_URL as string;
+  private API_URL = process.env.NEXT_PUBLIC_API_URL as string;
 
   constructor(private defaultHeaders: Record<string, string> = {}) {}
 
@@ -11,25 +11,25 @@ class FetchClient {
     isAuth: boolean = false,
     headers?: Record<string, string>,
   ): Promise<T> {
-    return this.fetch<T, undefined>(path, 'GET', isAuth, undefined, headers);
+    return this.fetch<T>(path, 'GET', isAuth, undefined, headers);
   }
 
-  async post<T, B>(
+  async post<T>(
     path: string,
-    body?: Record<string, B>,
+    body?: unknown,
     isAuth: boolean = false,
     headers?: Record<string, string>,
   ): Promise<T> {
-    return this.fetch<T, B>(path, 'POST', isAuth, body, headers);
+    return this.fetch<T>(path, 'POST', isAuth, body, headers);
   }
 
-  async put<T, B>(
+  async put<T>(
     path: string,
-    body?: Record<string, B>,
+    body?: unknown,
     isAuth: boolean = false,
     headers?: Record<string, string>,
   ): Promise<T> {
-    return this.fetch<T, B>(path, 'PUT', isAuth, body, headers);
+    return this.fetch<T>(path, 'PUT', isAuth, body, headers);
   }
 
   async delete<T>(
@@ -37,23 +37,23 @@ class FetchClient {
     isAuth: boolean = false,
     headers?: Record<string, string>,
   ): Promise<T> {
-    return this.fetch<T, undefined>(path, 'DELETE', isAuth, undefined, headers);
+    return this.fetch<T>(path, 'DELETE', isAuth, undefined, headers);
   }
 
-  async patch<T, B>(
+  async patch<T>(
     path: string,
-    body?: Record<string, B>,
+    body?: unknown,
     isAuth: boolean = false,
     headers?: Record<string, string>,
   ): Promise<T> {
-    return this.fetch<T, B>(path, 'PATCH', isAuth, body, headers);
+    return this.fetch<T>(path, 'PATCH', isAuth, body, headers);
   }
 
-  private async fetch<T, B>(
+  private async fetch<T>(
     path: string,
     method: string,
     isAuth: boolean,
-    body?: Record<string, B>,
+    body?: unknown,
     headers?: Record<string, string>,
   ): Promise<T> {
     const url = `${this.API_URL}${path}`;

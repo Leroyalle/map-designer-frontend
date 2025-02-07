@@ -6,12 +6,16 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { registerSchema, TRegisterSchema } from './schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FormInput } from '../../form-input';
+import { toast } from 'sonner';
+import { authService } from '@/services';
 
 interface Props {
+  onSuccess?: (userId: string) => void;
+  onChangeAction?: () => void;
   className?: string;
 }
 
-export const Register: React.FC<Props> = ({ className }) => {
+export const Register: React.FC<Props> = ({ onSuccess, onChangeAction, className }) => {
   const [needCallValue, setNeedCallValue] = useState(false);
   const [isConfirmed, setIsConfirmed] = useState(false);
   const [isSubscribed, setIsSubscribed] = useState(false);
@@ -26,7 +30,18 @@ export const Register: React.FC<Props> = ({ className }) => {
   });
 
   const onSubmit = (data: TRegisterSchema) => {
-    console.log(data);
+    toast.promise(authService.register(data), {
+      loading: 'Регистрация...',
+      success: ({ userId }) => {
+        form.setValue('name', '');
+        form.setValue('email', '');
+        form.setValue('password', '');
+        if (onSuccess) onSuccess(userId);
+        if (onChangeAction) onChangeAction();
+        return 'Письмо с кодом отправлено на почту';
+      },
+      error: 'Ошибка! Повторите попытку',
+    });
   };
 
   return (

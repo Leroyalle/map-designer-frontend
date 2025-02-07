@@ -1,6 +1,6 @@
 'use client';
-import React from 'react';
-import { Register, Login } from '../../forms';
+import React, { useState } from 'react';
+import { Login, RegisterActions } from '../../forms';
 import { Modal, ModalBody, ModalContent, Tab, Tabs } from '@heroui/react';
 
 interface Props {
@@ -9,15 +9,20 @@ interface Props {
 }
 
 export const AuthModal: React.FC<Props> = ({ open = true, onClose }) => {
+  const [selectedTab, setSelectedTab] = useState<string | number>('register');
   return (
-    <Modal size="lg" isOpen={open} placement="top-center" hideCloseButton onOpenChange={onClose}>
+    <Modal size="lg" isOpen={open} placement="center" hideCloseButton onOpenChange={onClose}>
       <ModalContent className="py-4 max-h-[90vh] overflow-y-auto scrollbar">
         <ModalBody>
-          <Tabs fullWidth className="w-full" aria-label="auth actions">
-            <Tab className="w-full" key="register" title="Зарегестрироваться">
-              <Register />
+          <Tabs
+            selectedKey={selectedTab}
+            onSelectionChange={(key) => setSelectedTab(key)}
+            fullWidth
+            aria-label="auth actions">
+            <Tab key="register" title="Зарегестрироваться">
+              <RegisterActions onChangeTab={() => setSelectedTab('login')} />
             </Tab>
-            <Tab className="w-full" key="login" title="Войти">
+            <Tab key="login" title="Войти">
               <Login />
             </Tab>
           </Tabs>
