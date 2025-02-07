@@ -1,3 +1,7 @@
+export enum AuthTokensEnum {
+  JWT = 'jwtToken',
+}
+
 export type RegisterType = LoginType & {
   name: string;
 };
@@ -12,6 +16,8 @@ export type VerifyUserType = {
   code: string;
 };
 
-export enum AuthTokensEnum {
-  JWT = 'jwtToken',
-}
+export type AuthResponse<T = void> = {
+  message: string;
+  isVerified: boolean;
+  checkPassword: boolean;
+} & T;

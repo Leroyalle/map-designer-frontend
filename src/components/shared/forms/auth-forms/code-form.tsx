@@ -4,6 +4,8 @@ import { toast } from 'sonner';
 import { authService } from '@/services';
 import { InputOtp } from '@heroui/react';
 import { Button } from '@/components/ui';
+import { codeSchema, TCodeSchema } from './schemas';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 interface Props {
   title?: string;
@@ -16,21 +18,22 @@ export const CodeForm: React.FC<Props> = ({ title, userId, onChangeTab }) => {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm({
+  } = useForm<TCodeSchema>({
+    resolver: zodResolver(codeSchema),
     mode: 'onSubmit',
     defaultValues: {
       code: '',
     },
   });
 
-  const onSubmit = async (data: { code: string }) => {
+  const onSubmit = async (data: TCodeSchema) => {
     toast.promise(authService.verifyUser({ userId, code: data.code }), {
-      loading: 'Подождите, идет регистрация...',
+      loading: 'Подождите, проверяю код...',
       success: () => {
         if (onChangeTab) onChangeTab();
         return 'Аккаунт подтвержден! Входите в систему';
       },
-      error: 'Ошибка! Повторите попытку',
+      error: 'Ошибка!',
     });
   };
 

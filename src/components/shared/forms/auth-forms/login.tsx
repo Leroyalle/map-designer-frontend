@@ -29,13 +29,13 @@ export const Login: React.FC<Props> = ({ className }) => {
 
   const onSubmit = (data: TLoginSchema) => {
     toast.promise(authService.login(data), {
-      loading: 'Проверка...',
+      loading: 'Проверка введенных данных...',
       success: (res) => {
         saveAuthCookie(res.token);
         router.push(NavRoutesEnum.PROFILE);
         form.setValue('email', '');
         form.setValue('password', '');
-        return 'Успешный вход в аккаунт! Перевожу...';
+        return 'Успешный вход в аккаунт! Секунду...';
       },
       error: 'Ошибка! Повторите попытку',
     });

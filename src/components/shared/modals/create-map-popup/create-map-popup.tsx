@@ -9,7 +9,7 @@ export const CreateMapPopup: React.FC = () => {
     <Dialog open={isOpen} onOpenChange={onChange}>
       <DialogContent className="sm:max-w-[554px] rounded-[10px]">
         <DialogHeaderBlock />
-        <DialogMainBlock />
+        <DialogMainBlock onClose={onChange} />
         <DialogFooterBlock />
       </DialogContent>
     </Dialog>
