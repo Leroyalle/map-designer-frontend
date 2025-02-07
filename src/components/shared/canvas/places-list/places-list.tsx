@@ -35,7 +35,7 @@ const mapItems = [
   },
 ];
 
-export const PlaceList: React.FC<Props> = ({ className }) => {
+export const PlacesList: React.FC<Props> = ({ className }) => {
   const [searchValue, setSearchValue] = React.useState('');
 
   const filteredItems = mapItems.filter((item) =>

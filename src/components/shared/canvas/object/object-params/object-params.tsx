@@ -38,7 +38,7 @@ export const ObjectParams: React.FC<Props> = ({ className }) => {
   };
   return (
     <Card className={cn('bg-[#262626] max-w-36 border-0', className)}>
-      <CardHeader className="text-background flex flex-row items-center justify-between">
+      <CardHeader className="text-background  flex flex-row items-center justify-between">
         <CardTitle className="font-medium">О помещении</CardTitle>
 
         <Select>
@@ -55,7 +55,7 @@ export const ObjectParams: React.FC<Props> = ({ className }) => {
       <CardContent className="flex flex-col gap-4">
         <ObjectParamsInput placeholder="Название" />
 
-        <div className="text-background border-dashed border-2 rounded-sm">
+        <div className="text-background  border-dashed border-2 rounded-sm">
           <label htmlFor="imageUpload" className="flex gap-x-[10px] cursor-pointer">
             <div className="rounded-full w-7 h-7 bg-red-500 flex-shrink-0">
               <Paperclip />

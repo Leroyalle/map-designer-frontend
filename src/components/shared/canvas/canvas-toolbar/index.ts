@@ -1,2 +1,1 @@
 export { CanvasToolbar } from './canvas-toolbar';
-export { PlacesList } from './places-list';
