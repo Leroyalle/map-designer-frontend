@@ -2,13 +2,19 @@ import React from 'react';
 import { cn } from '@/lib/utils';
 import { MapItem } from './map-item';
 import { NewMapButton } from './new-map-button';
+import { Project } from '@/types';
+import { EmptyState } from '@/components/ui';
 
 interface Props {
-  items: string[];
+  items: Project[];
   className?: string;
 }
 
 export const MapsList: React.FC<Props> = ({ items, className }) => {
+  if (items.length === 0) {
+    return <EmptyState imageUrl="/img/empty-states/projects-not-found.jpg" />;
+  }
+
   return (
     <div
       className={cn(
@@ -16,8 +22,8 @@ export const MapsList: React.FC<Props> = ({ items, className }) => {
         className,
       )}>
       <NewMapButton />
-      {items.map((_, i) => (
-        <MapItem key={i} />
+      {items.map((item, i) => (
+        <MapItem key={i} name={item.name} imageUrl={item.imageUrl} />
       ))}
     </div>
   );

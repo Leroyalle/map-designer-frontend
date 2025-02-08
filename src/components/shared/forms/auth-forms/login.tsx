@@ -54,6 +54,7 @@ export const Login: React.FC<Props> = ({ className }) => {
           <div className="flex flex-col gap-y-5">
             <FormInput
               name="email"
+              autoComplete="off"
               variant="faded"
               startContent={<Mail className="text-foreground/40" />}
               placeholder="Электронная почта"

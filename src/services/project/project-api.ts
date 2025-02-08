@@ -6,8 +6,8 @@ class ProjectService {
     return $fetch.post<Project[]>(ApiRoutesEnum.PROJECT, body, true);
   }
 
-  async getAll() {
-    return $fetch.get<Project[]>(ApiRoutesEnum.PROJECT, true);
+  async getAll(page: number = 1, perPage: number = 10) {
+    return $fetch.get<Project[]>(`${ApiRoutesEnum.PROJECT}?page=${page}&perPage=${perPage}`, true);
   }
 }
 

@@ -1,9 +1,11 @@
 import { projectService } from '@/services';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 
 export const useCreateProject = () => {
+  const queryClient = useQueryClient();
   const createProjectMutation = useMutation({
     mutationFn: projectService.create,
+    onSettled: () => queryClient.invalidateQueries({ queryKey: ['projects'] }),
   });
 
   return {

@@ -58,12 +58,14 @@ export const Register: React.FC<Props> = ({ onSuccess, onChangeAction, className
             <FormInput
               name="name"
               variant="faded"
+              autoComplete="off"
               startContent={<User className="text-foreground/40" />}
               placeholder="Имя"
             />
             <FormInput
               name="email"
               variant="faded"
+              autoComplete="off"
               startContent={<Mail className="text-foreground/40" />}
               placeholder="Электронная почта"
             />
