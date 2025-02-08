@@ -5,7 +5,9 @@ export const mapDescription = z.object({
   name: z.string().min(2, { message: 'Не менее 2-х символов' }),
   shortDesc: z.string().min(2, { message: 'Укажите краткое описание' }),
   desc: z.string().optional(),
-  floor: z.coerce.number({ invalid_type_error: 'Поле должно быть числом' }).int(),
+  floor: z.coerce
+    .number({ invalid_type_error: 'Поле должно быть числом', required_error: 'Age is required' })
+    .safe(),
   time: z.string().min(9, { message: 'Укажите корректное время в формате XX:XX-XX:XX' }),
   link: z.string().optional(),
 });
