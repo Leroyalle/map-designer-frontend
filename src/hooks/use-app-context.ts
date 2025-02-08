@@ -1,4 +1,4 @@
-import { AppContext } from '@/components/shared/providers';
+import { AppContext } from '@/components/shared/providers/root/context-provider';
 import { useContext } from 'react';
 
 export const useAppContext = () => {

@@ -1,2 +1,2 @@
-export { Providers } from './providers';
-export { AppContext } from './context-provider';
+export { Providers } from './root';
+export { HomeProviders } from './home';

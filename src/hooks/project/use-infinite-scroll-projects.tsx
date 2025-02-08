@@ -6,7 +6,7 @@ import { useInView } from 'react-intersection-observer';
 
 export const useInfiniteScrollProjects = () => {
   const { ref, inView } = useInView();
-  const { data, isPending, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
+  const { data, isPending, isError, fetchNextPage, isFetchingNextPage } = useInfiniteQuery(
     getAllProjectsInfiniteQueryOptions(),
   );
   useEffect(() => {
@@ -17,5 +17,5 @@ export const useInfiniteScrollProjects = () => {
 
   const cursor = <div ref={ref} className="h-1 w-full bg-transparent" />;
 
-  return { data, isPending, isFetchingNextPage, cursor };
+  return { data, isPending, isError, isFetchingNextPage, cursor };
 };

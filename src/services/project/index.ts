@@ -1,2 +1,2 @@
 export { projectService } from './project-api';
-export { getAllProjectsInfiniteQueryOptions } from './tanstack-queries';
+export { getAllProjectsInfiniteQueryOptions } from './query-options';

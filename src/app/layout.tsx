@@ -3,6 +3,7 @@ import { Montserrat } from 'next/font/google';
 import './globals.css';
 import { Providers } from '@/components/shared';
 import { cn } from '@/lib/utils';
+import { ReactNode } from 'react';
 
 const montserrat = Montserrat({
   subsets: ['cyrillic'],
@@ -18,7 +19,7 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>

@@ -5,6 +5,7 @@ import { HeroUIProvider } from '@heroui/react';
 import { ContextProvider } from './context-provider';
 import { Toaster } from '@/components/ui';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 interface Props {
   children: ReactNode;
@@ -26,6 +27,7 @@ export const Providers: React.FC<Props> = ({ children }) => {
           <HeroUIProvider>
             {children}
             <Toaster position="bottom-left" />
+            <ReactQueryDevtools initialIsOpen={false} />
           </HeroUIProvider>
         </ContextProvider>
       </QueryClientProvider>

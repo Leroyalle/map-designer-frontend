@@ -9,17 +9,19 @@ interface Props {
 }
 
 export const ProjectsTab: React.FC<Props> = ({ className }) => {
-  const { data: projects, cursor, isFetchingNextPage } = useInfiniteScrollProjects();
-
-  if (!projects) {
-    return <div>Нет проектов</div>;
-  }
+  const {
+    data: projects,
+    isPending,
+    isError,
+    cursor,
+    isFetchingNextPage,
+  } = useInfiniteScrollProjects();
 
   return (
     <>
-      <MapsList items={projects} className={className} />
+      <MapsList items={projects} isLoading={isPending} isError={isError} className={className} />
       {cursor}
-      {isFetchingNextPage && <Spinner color="warning" className="w-full mx-auto mb-2" />}
+      {isFetchingNextPage && <Spinner className="w-full mx-auto mb-2" />}
     </>
   );
 };
