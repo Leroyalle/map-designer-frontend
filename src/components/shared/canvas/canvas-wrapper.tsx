@@ -2,7 +2,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Canvas as FabricCanvas } from 'fabric';
 import clsx from 'clsx';
-import { getCursorPositionRelativeToContainer } from '@/lib';
+import { handleMove, handleZoom } from '@/lib';
 
 interface Props {
   className?: string;
@@ -23,39 +23,9 @@ export const CanvasWrapper: React.FC<Props> = ({ className }) => {
 
   const handleWheel = (e: WheelEvent) => {
     e.preventDefault();
-
-    if (!containerRef.current) return;
-
-    const minScale = 0.4;
-    const maxScale = 3;
-    const sensitivity = 0.001;
-
-    const currentTransform = containerRef.current.style.transform;
-    const scaleMatch = currentTransform.match(/scale\(([\d.]+)\)/);
-    const translateMatch = currentTransform.match(/translate\(([-\d.]+)px,\s*([-\d.]+)px\)/);
-    const currentScale = parseFloat(scaleMatch?.[1] || '1');
-    const currentX = parseFloat(translateMatch?.[1] || '0');
-    const currentY = parseFloat(translateMatch?.[2] || '0');
-
-    const { x: mouseX, y: mouseY } = getCursorPositionRelativeToContainer(e, containerRef.current);
-
-    const rect = containerRef.current.getBoundingClientRect();
-    const containerWidth = rect.width;
-    const containerHeight = rect.height;
-
-    const delta = e.deltaY * sensitivity;
-    const newScale = Math.min(Math.max(currentScale * Math.pow(2, -delta), minScale), maxScale);
-
-    const newTranslateX = currentX + (mouseX - containerWidth / 2) * (1 - newScale / currentScale);
-    const newTranslateY = currentY + (mouseY - containerHeight / 2) * (1 - newScale / currentScale);
-
-    setCanvasTransform({
-      x: newTranslateX,
-      y: newTranslateY,
-      scale: newScale,
-    });
-
-    console.log(`Текущий масштаб: ${newScale.toFixed(2)}`);
+    if (containerRef.current) {
+      handleZoom(e, containerRef.current, setCanvasTransform);
+    }
   };
 
   const handleKeyDown = (e: KeyboardEvent) => {
@@ -83,22 +53,8 @@ export const CanvasWrapper: React.FC<Props> = ({ className }) => {
   };
 
   const handleMouseMove = (e: MouseEvent) => {
-    if (
-      isPanning.current &&
-      lastPosition.current &&
-      isSpacePressed.current &&
-      containerRef.current
-    ) {
-      const deltaX = e.clientX - lastPosition.current.x;
-      const deltaY = e.clientY - lastPosition.current.y;
-
-      setCanvasTransform((prevTransform) => ({
-        ...prevTransform,
-        x: prevTransform.x + deltaX,
-        y: prevTransform.y + deltaY,
-      }));
-
-      lastPosition.current = { x: e.clientX, y: e.clientY };
+    if (isPanning.current && isSpacePressed.current && containerRef.current) {
+      handleMove(e, setCanvasTransform, lastPosition);
     }
   };
 
