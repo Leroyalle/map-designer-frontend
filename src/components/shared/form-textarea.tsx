@@ -1,14 +1,14 @@
 'use client';
-import { Input, InputProps } from '@heroui/react';
+import { TextAreaProps, Textarea } from '@heroui/react';
 import { useFormContext } from 'react-hook-form';
 
-interface Props extends InputProps {
+interface Props extends TextAreaProps {
   name: string;
   required?: boolean;
   className?: string;
 }
 
-export const FormInput: React.FC<Props> = ({ className, name, ...props }) => {
+export const TextareaInput: React.FC<Props> = ({ className, name, ...props }) => {
   const {
     register,
     formState: { errors },
@@ -22,8 +22,9 @@ export const FormInput: React.FC<Props> = ({ className, name, ...props }) => {
   const onClickClear = () => {
     setValue(name, '', { shouldValidate: true });
   };
+
   return (
-    <Input
+    <Textarea
       errorMessage={errorText}
       isInvalid={!!errorText}
       value={value}

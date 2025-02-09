@@ -89,3 +89,24 @@ body {
 .scrollbar::-webkit-scrollbar-thumb:hover {
   background: #dbdadd;
 }
+
+.object-form-input .group[data-has-value='true'] .group-data-[has-value='true'] {
+  color: white !important;
+}
+
+.object-form-wrapper {
+  background-color: #373737 !important;
+  color: white !important;
+}
+
+.object-form-wrapper[data-hover='true'] {
+  background-color: #373737 !important;
+}
+
+.object-form-wrapper[data-focus='true'] {
+  background-color: #373737 !important;
+}
+
+.object-form-input {
+  color: var(--background) !important;
+}

@@ -15,7 +15,7 @@ export const ObjectParamsInput = React.forwardRef<HTMLInputElement, Props>(
     return (
       <div className={cn('flex relative', className)}>
         <input
-          className="w-full rounded-[5px] border-[1.5px] font-medium py-2 px-4 border-[#5A5A5A] bg-[#373737] text-background placeholder:text-background/75 outline-0 "
+          className="w-full rounded-[5px] border-[1.5px] py-2 px-4 text-sm border-[#5A5A5A] font-medium bg-[#373737] text-background placeholder:text-[#5c5c5c] outline-0"
           value={value}
           onChange={onChangeValue}
           type={type}
@@ -24,7 +24,7 @@ export const ObjectParamsInput = React.forwardRef<HTMLInputElement, Props>(
         />
 
         {mark && value === '' && (
-          <span className="absolute right-3 top-1/4 text-[#E53B35]   select-none text-xl font-medium">
+          <span className="absolute right-3 top-1/4 text-[#E53B35] select-none text-xl font-medium">
             *
           </span>
         )}
