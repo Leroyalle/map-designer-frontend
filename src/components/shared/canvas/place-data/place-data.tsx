@@ -20,18 +20,14 @@ export const PlaceData: React.FC<Props> = ({ className }) => {
         className,
       )}>
       <PlaceDataHeader color={placeColor} />
-
       <PlaceInfoBlock text={shortDesc} title="Большой лекторий" />
       <hr className=" border-[#eee9ee]" />
       <PlaceInfoBlock
         title="Описание"
         text="Кстати, интерактивные прототипы смешаны с не уникальными данными до степени совершенной неузнаваемости"
       />
-
       <PlaceTimeInfo isOpenPlace={isOpenPlace} time={new Date()} />
-
       <PlaceCategory category={category} />
-
       <Button className="rounded-[5px] p-5">Перейти на сайт</Button>
     </div>
   );
