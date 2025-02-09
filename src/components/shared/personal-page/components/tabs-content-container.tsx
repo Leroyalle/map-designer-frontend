@@ -9,21 +9,22 @@ import {
 } from '@/components/ui';
 import React from 'react';
 import { ContentHeader } from './content-header';
-import { MapsList } from './maps-list';
+import { cn } from '@/lib';
+import { ProjectsTab } from './tabs';
 
 interface Props {
-  projects: string[];
+  className?: string;
 }
 
-export const TabsContentContainer: React.FC<Props> = ({ projects }) => {
+export const TabsContentContainer: React.FC<Props> = ({ className }) => {
   return (
     <>
-      <TabsContent value="projects" className="p-5">
+      <TabsContent value="projects" className={cn('p-5', className)}>
         <ContentHeader title="Созданные" />
         <hr className="my-5" />
-        <MapsList items={projects} />
+        <ProjectsTab />
       </TabsContent>
-      <TabsContent value="tariffs" className="p-5">
+      <TabsContent value="tariffs" className={cn('p-5', className)}>
         <Card className="border-0 shadow-none">
           <CardHeader>
             <CardTitle>Тарифы</CardTitle>

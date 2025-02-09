@@ -1,2 +1,4 @@
 export { $fetch } from './ferch-wrapper';
-export { authService } from './auth';
+export * from './auth';
+export * from './project';
+export * from './user';

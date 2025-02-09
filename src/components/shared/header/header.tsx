@@ -1,14 +1,25 @@
+'use client';
 import React from 'react';
 import { EditorBtns, ProfileBtn } from './components';
 import { Typography } from '@/components/ui';
+import { useGetMe } from '@/hooks';
 
-export const Header: React.FC = () => {
-  const isEdit = false;
+interface Props {
+  isEditMode?: boolean;
+}
+
+export const Header: React.FC<Props> = ({ isEditMode = false }) => {
+  const { data: me } = useGetMe();
+
+  if (!me) {
+    return null;
+  }
+
   return (
     <header className="bg-[#262626] flex justify-between items-center text-white h-[65px] px-5">
       <Typography>Конструктор карт</Typography>
-      <Typography className="text-[#878787]">Version 0.1</Typography>
-      {isEdit ? <EditorBtns /> : <ProfileBtn />}
+      <Typography className="text-[#878787] select-none">Version 0.1</Typography>
+      {isEditMode ? <EditorBtns /> : <ProfileBtn email={me.email} avatar={undefined} />}
     </header>
   );
 };
