@@ -57,12 +57,10 @@ export const CanvasField: React.FC<Props> = ({ className }) => {
       handleMove(e, setCanvasTransform, lastPosition);
     }
   };
-
   useEffect(() => {
     if (!containerRef.current) return;
     containerRef.current.style.transform = `translate(${canvasTransform.x}px, ${canvasTransform.y}px) scale(${canvasTransform.scale})`;
   }, [canvasTransform]);
-
   useEffect(() => {
     if (canvasRef.current && containerRef.current) {
       const initCanvas = new FabricCanvas(canvasRef.current, {

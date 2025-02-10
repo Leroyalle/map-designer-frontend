@@ -7,21 +7,15 @@ interface Props {
   className?: string;
 }
 
-// const buildTools = [
-//   { image: '/img/tool-icons/build-elements/door.svg', name: 'Двери' },
-//   { image: '/img/tool-icons/build-elements/window.svg', name: 'Окна' },
-// ];
+const buildTools = [
+  { image: '/img/tool-icons/build-elements/door.svg', name: 'Двери' },
+  { image: '/img/tool-icons/build-elements/window.svg', name: 'Окна' },
+];
 
-// const objectsTools = [
-//   { image: '/img/tool-icons/figures/rectangle.svg', name: 'Прямоугольник' },
-//   { image: '/img/tool-icons/figures/round.svg', name: 'Круг' },
-//   { image: '/img/tool-icons/figures/free-figure.svg', name: 'Произвольная фигура' },
-// ];
-
-// const facilitiesTools = [
-//   { image: '/img/tool-icons/build-elements/facilities/stairs.svg', name: 'Лестница' },
-//   { image: '/img/tool-icons/build-elements/facilities/elevator.svg', name: 'Лифт' },
-// ];
+const facilitiesTools = [
+  { image: '/img/tool-icons/build-elements/facilities/stairs.svg', name: 'Лестница' },
+  { image: '/img/tool-icons/build-elements/facilities/elevator.svg', name: 'Лифт' },
+];
 
 const controlTools = [
   { toolImage: '/img/tool-icons/helpers/chevron.svg' },
@@ -57,9 +51,9 @@ export const CanvasToolbar: React.FC<Props> = ({ className }) => {
   return (
     <div className={cn('flex flex-col gap-3 items-center', className)}>
       <div className={'flex gap-3 items-end'}>
-        {/* <ToolBlock title="Двери и окна" tools={buildTools} /> */}
+        <ToolBlock title="Двери и окна" tools={buildTools} />
         <ToolBlock title="Обьекты" tools={SHAPE_TOOLS} />
-        {/* <ToolBlock title="Удобства" tools={facilitiesTools} /> */}
+        <ToolBlock title="Удобства" tools={facilitiesTools} />
       </div>
       <div className="flex gap-3">
         <BottomTools toolList={controlTools} />

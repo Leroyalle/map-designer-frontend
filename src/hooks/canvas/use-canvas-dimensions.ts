@@ -1,3 +1,4 @@
+'use client';
 import { useCanvasSlice } from '@/store';
 import { useCallback, useEffect, useState } from 'react';
 
