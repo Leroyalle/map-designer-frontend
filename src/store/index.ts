@@ -1,0 +1,1 @@
+export { useCanvasSlice } from './slices';

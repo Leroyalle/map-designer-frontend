@@ -17,7 +17,7 @@ export const Header: React.FC<Props> = ({ isEditMode = false }) => {
 
   return (
     <header className="bg-[#262626] flex justify-between items-center text-white h-[65px] px-5">
-      <Typography>Конструктор карт</Typography>
+      <Typography>Project name</Typography>
       <Typography className="text-[#878787] select-none">Version 0.1</Typography>
       {isEditMode ? <EditorBtns /> : <ProfileBtn email={me.email} avatar={undefined} />}
     </header>
