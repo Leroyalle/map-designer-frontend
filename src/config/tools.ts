@@ -47,7 +47,7 @@ export const SHAPE_TOOLS: ToolConfig[] = [
     image: '/img/tool-icons/figures/free-figure.svg',
     name: 'Произвольная фигура',
     createHandler: (canvas) => {
-      const radius = 4;
+      const radius = 5;
 
       let isDrawing = false;
       let pointer1: Circle | null = null;
@@ -67,8 +67,8 @@ export const SHAPE_TOOLS: ToolConfig[] = [
           radius,
           id: 'circlePointer1',
           fill: '#fafafa',
-          stroke: 'black',
-          strokeWidth: 0.5,
+          stroke: 'gray',
+          strokeWidth: 1,
           left: point1_x,
           top: point1_y,
           originX: 'center',
@@ -78,6 +78,7 @@ export const SHAPE_TOOLS: ToolConfig[] = [
           lockScalingX: true,
           lockScalingY: true,
           visible: false,
+          objectCaching: false,
         });
         canvas.add(pointer1);
 
@@ -97,7 +98,7 @@ export const SHAPE_TOOLS: ToolConfig[] = [
       });
 
       canvas.on('mouse:move', (e) => {
-        if (!isDrawing || !e.pointer || !pointer1 || !tempLine) return;
+        if (!tempLine || !isDrawing) return;
 
         tempLine.set({
           x2: e.pointer.x,
@@ -108,7 +109,8 @@ export const SHAPE_TOOLS: ToolConfig[] = [
       });
 
       canvas.on('mouse:up', (e) => {
-        if (!isDrawing || !e.pointer || !pointer1 || !tempLine) return;
+        if (!isDrawing) return;
+
         canvas.selection = true;
 
         isDrawing = false;
@@ -120,7 +122,7 @@ export const SHAPE_TOOLS: ToolConfig[] = [
           id: 'circlePointer2',
           fill: '#fafafa',
           stroke: 'black',
-          strokeWidth: 0.5,
+          strokeWidth: 1,
           left: point2_x,
           top: point2_y,
           originX: 'center',
@@ -128,6 +130,7 @@ export const SHAPE_TOOLS: ToolConfig[] = [
           hasBorders: false,
           hasControls: false,
           lockScalingX: true,
+          objectCaching: false,
           lockScalingY: true,
         });
         pointer1.visible = true;
@@ -146,7 +149,6 @@ export const SHAPE_TOOLS: ToolConfig[] = [
           lockScalingY: true,
         });
         canvas.add(finalLine);
-        canvas.selection = true;
 
         canvas.remove(tempLine);
         tempLine = null;
@@ -157,6 +159,7 @@ export const SHAPE_TOOLS: ToolConfig[] = [
         canvas.on('selection:cleared', handleSelectionCleared);
 
         canvas.off('mouse:down');
+        canvas.off('mouse:up');
       });
 
       function movingLine(e: any) {
@@ -183,6 +186,7 @@ export const SHAPE_TOOLS: ToolConfig[] = [
       function handleObjectSelected(e: any) {
         console.log('selected', e);
         const selectedObject = e.target;
+        canvas.selection = true;
         if (selectedObject && selectedObject.id === 'line') {
           pointer1?.set({ visible: true });
           pointer2?.set({ visible: true });
@@ -192,7 +196,7 @@ export const SHAPE_TOOLS: ToolConfig[] = [
 
       function handleSelectionCleared() {
         console.log('cleared');
-
+        canvas.selection = true;
         pointer1?.set({ visible: false });
         pointer2?.set({ visible: false });
         canvas.renderAll();
