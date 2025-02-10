@@ -1,3 +1,4 @@
+'use client';
 import React from 'react';
 import { ToolVariant } from './tool-variant';
 import { cn } from '@/lib';
@@ -18,6 +19,7 @@ export const ToolBlock: React.FC<Props> = ({ title, tools, className }) => {
     tool.createHandler(canvas);
     canvas.requestRenderAll();
   };
+
   return (
     <div className={cn('bg-[#262626] text-background/90 rounded-[10px] min-w-60 h-fit', className)}>
       <div className="text-background/50 p-3 text-sm">{title}</div>

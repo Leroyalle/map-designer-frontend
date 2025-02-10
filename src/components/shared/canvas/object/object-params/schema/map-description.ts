@@ -1,14 +1,15 @@
 import z from 'zod';
 
 export const mapDescription = z.object({
-  mapType: z.string().min(3, { message: 'Выберите тип объекта' }),
+  mapType: z.string().optional(),
   name: z.string().min(2, { message: 'Не менее 2-х символов' }),
-  shortDesc: z.string().min(2, { message: 'Укажите краткое описание' }),
+  shortDesc: z.string().optional(),
   desc: z.string().optional(),
   floor: z.coerce
     .number({ invalid_type_error: 'Поле должно быть числом', required_error: 'Age is required' })
-    .safe(),
-  time: z.string().min(9, { message: 'Укажите корректное время в формате XX:XX-XX:XX' }),
+    .safe()
+    .optional(),
+  time: z.string().optional(),
   link: z.string().optional(),
 });
 

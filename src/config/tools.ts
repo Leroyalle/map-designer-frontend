@@ -1,5 +1,6 @@
 import { Canvas } from 'fabric';
 import { ShapeFactory } from '../lib/canvas/shapes/shape-factory';
+import { generateFrameName } from '@/lib';
 
 export type ToolConfig = {
   id: string;
@@ -20,6 +21,7 @@ export const SHAPE_TOOLS: ToolConfig[] = [
         width: 100,
         height: 100,
         fill: '#FF3D00',
+        name: generateFrameName(canvas),
       });
     },
     shortcut: 'KeyR',
@@ -32,6 +34,7 @@ export const SHAPE_TOOLS: ToolConfig[] = [
       ShapeFactory.createCircle(canvas, {
         radius: 50,
         fill: '#00B8D4',
+        name: generateFrameName(canvas),
       });
     },
     shortcut: 'KeyC',

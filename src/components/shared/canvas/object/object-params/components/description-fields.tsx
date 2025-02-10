@@ -4,7 +4,6 @@ import { FormInput, TextareaInput } from '@/components/shared';
 export const DescriptionFields: React.FC = () => {
   return (
     <>
-      {' '}
       <FormInput
         name="shortDesc"
         placeholder="Краткое описание (80 символов)"
