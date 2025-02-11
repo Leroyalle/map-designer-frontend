@@ -1,5 +1,6 @@
-import { Canvas, Line, Circle } from 'fabric';
+import { Canvas, Line, TPointerEvent, TPointerEventInfo } from 'fabric';
 import { ShapeFactory } from '../lib/canvas/shapes/shape-factory';
+import { drawLineFirstPoint, drawLineMouseMove, drawLineSecondPoint } from '@/lib';
 
 export type ToolConfig = {
   id: string;
@@ -19,7 +20,6 @@ export const SHAPE_TOOLS: ToolConfig[] = [
       ShapeFactory.createRect(canvas, {
         width: 100,
         height: 100,
-        moveCursor: 'grab',
         fill: 'transparent',
         stroke: 'black',
         strokeWidth: 2,
@@ -33,7 +33,6 @@ export const SHAPE_TOOLS: ToolConfig[] = [
     name: 'Круг',
     createHandler: (canvas) => {
       ShapeFactory.createCircle(canvas, {
-        moveCursor: 'grab',
         radius: 50,
         fill: 'transparent',
         stroke: 'black',
@@ -47,160 +46,59 @@ export const SHAPE_TOOLS: ToolConfig[] = [
     image: '/img/tool-icons/figures/free-figure.svg',
     name: 'Произвольная фигура',
     createHandler: (canvas) => {
-      const radius = 5;
-
-      let isDrawing = false;
-      let pointer1: Circle | null = null;
-      let pointer2: Circle | null = null;
+      let lastMouseEvent: TPointerEventInfo<TPointerEvent> | null = null;
       let tempLine: Line | null = null;
-      let finalLine: Line | null = null;
+      let point1_x: number = 0;
+      let point1_y: number = 0;
 
-      canvas.on('mouse:down', (e) => {
-        if (!e.pointer) return;
+      let isCtrlPressed = false;
 
-        isDrawing = true;
-        canvas.selection = false;
+      const handleMouseDown = (e: TPointerEventInfo<TPointerEvent>) => {
+        drawLineFirstPoint(e, point1_x, point1_y, tempLine, canvas);
+        const result = drawLineFirstPoint(e, point1_x, point1_y, tempLine, canvas);
+        if (result) {
+          point1_x = result.point1_x;
+          point1_y = result.point1_y;
+          tempLine = result.tempLine;
+        }
+      };
 
-        const point1_x = e.pointer.x;
-        const point1_y = e.pointer.y;
-        pointer1 = new Circle({
-          radius,
-          id: 'circlePointer1',
-          fill: '#fafafa',
-          stroke: 'gray',
-          strokeWidth: 1,
-          left: point1_x,
-          top: point1_y,
-          originX: 'center',
-          originY: 'center',
-          hasBorders: false,
-          hasControls: false,
-          lockScalingX: true,
-          lockScalingY: true,
-          visible: false,
-          objectCaching: false,
-        });
-        canvas.add(pointer1);
+      const handleMouseMove = (e: TPointerEventInfo<TPointerEvent>) => {
+        lastMouseEvent = e;
+        drawLineMouseMove(e, tempLine, isCtrlPressed, canvas, point1_x, point1_y);
+      };
 
-        tempLine = new Line([point1_x, point1_y, point1_x, point1_y], {
-          id: 'tempLine',
-          stroke: 'black',
-          strokeWidth: 2,
-          fill: null,
-          hasBorders: false,
-          hasControls: false,
-          lockMovementX: true,
-          lockMovementY: true,
-          lockScalingX: true,
-          lockScalingY: true,
-        });
-        canvas.add(tempLine);
-      });
-
-      canvas.on('mouse:move', (e) => {
-        if (!tempLine || !isDrawing) return;
-
-        tempLine.set({
-          x2: e.pointer.x,
-          y2: e.pointer.y,
-        });
-        tempLine.setCoords();
-        canvas.renderAll();
-      });
-
-      canvas.on('mouse:up', (e) => {
-        if (!isDrawing) return;
-
-        canvas.selection = true;
-
-        isDrawing = false;
-
-        const point2_x = e.pointer.x;
-        const point2_y = e.pointer.y;
-        pointer2 = new Circle({
-          radius,
-          id: 'circlePointer2',
-          fill: '#fafafa',
-          stroke: 'black',
-          strokeWidth: 1,
-          left: point2_x,
-          top: point2_y,
-          originX: 'center',
-          originY: 'center',
-          hasBorders: false,
-          hasControls: false,
-          lockScalingX: true,
-          objectCaching: false,
-          lockScalingY: true,
-        });
-        pointer1.visible = true;
-        canvas.add(pointer2);
-
-        finalLine = new Line([pointer1.left, pointer1.top, point2_x, point2_y], {
-          id: 'line',
-          stroke: 'black',
-          strokeWidth: 2,
-          fill: null,
-          hasBorders: false,
-          hasControls: false,
-          lockMovementX: true,
-          lockMovementY: true,
-          lockScalingX: true,
-          lockScalingY: true,
-        });
-        canvas.add(finalLine);
-
+      const handleMouseUp = (e: TPointerEventInfo<TPointerEvent>) => {
+        if (!tempLine) return;
         canvas.remove(tempLine);
         tempLine = null;
 
-        canvas.on('object:moving', movingLine);
+        drawLineSecondPoint(e, canvas, point1_x, point1_y, isCtrlPressed);
+      };
 
-        canvas.on('selection:created', handleObjectSelected);
-        canvas.on('selection:cleared', handleSelectionCleared);
-
-        canvas.off('mouse:down');
-        canvas.off('mouse:up');
-      });
-
-      function movingLine(e: any) {
-        const target = e.target;
-        if (target && target.id && target.id.startsWith('circlePointer')) {
-          const line = canvas.getObjects().find((obj) => obj.id === 'line') as Line;
-          if (line) {
-            if (target.id === 'circlePointer1') {
-              line.set({
-                x1: target.left,
-                y1: target.top,
-              });
-            } else if (target.id === 'circlePointer2') {
-              line.set({
-                x2: target.left,
-                y2: target.top,
-              });
-            }
-            line.setCoords();
+      document.addEventListener('keydown', (e) => {
+        if (e.ctrlKey) {
+          isCtrlPressed = true;
+          if (tempLine && lastMouseEvent) {
+            handleMouseMove(lastMouseEvent);
           }
         }
-      }
+      });
 
-      function handleObjectSelected(e: any) {
-        console.log('selected', e);
-        const selectedObject = e.target;
-        canvas.selection = true;
-        if (selectedObject && selectedObject.id === 'line') {
-          pointer1?.set({ visible: true });
-          pointer2?.set({ visible: true });
-          canvas.renderAll();
+      document.addEventListener('keyup', (e) => {
+        if (!e.ctrlKey) {
+          isCtrlPressed = false;
+          if (tempLine && lastMouseEvent) {
+            handleMouseMove(lastMouseEvent);
+          }
         }
-      }
+      });
 
-      function handleSelectionCleared() {
-        console.log('cleared');
-        canvas.selection = true;
-        pointer1?.set({ visible: false });
-        pointer2?.set({ visible: false });
-        canvas.renderAll();
-      }
+      canvas.on('mouse:down', handleMouseDown);
+
+      canvas.on('mouse:up', handleMouseUp);
+
+      canvas.on('mouse:move', handleMouseMove);
     },
 
     shortcut: 'KeyC',

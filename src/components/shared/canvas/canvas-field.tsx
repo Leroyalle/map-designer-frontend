@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Canvas as FabricCanvas } from 'fabric';
 import clsx from 'clsx';
-import { handleMove, handleZoom } from '@/lib';
+import { handleMove, handleZoom, shapeRotation } from '@/lib';
 import { useCanvasSlice } from '@/store';
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
 }
 
 export const CanvasField: React.FC<Props> = ({ className }) => {
-  const setCanvas = useCanvasSlice((state) => state.setCanvas);
+  const { setCanvas, canvas } = useCanvasSlice();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const isPanning = useRef(false);
@@ -61,6 +61,7 @@ export const CanvasField: React.FC<Props> = ({ className }) => {
     if (!containerRef.current) return;
     containerRef.current.style.transform = `translate(${canvasTransform.x}px, ${canvasTransform.y}px) scale(${canvasTransform.scale})`;
   }, [canvasTransform]);
+
   useEffect(() => {
     if (canvasRef.current && containerRef.current) {
       const initCanvas = new FabricCanvas(canvasRef.current, {
@@ -89,6 +90,25 @@ export const CanvasField: React.FC<Props> = ({ className }) => {
       };
     }
   }, []);
+  React.useEffect(() => {
+    if (!canvas) return;
+    canvas.on('object:rotating', (e) => {
+      let isCtrlPressed = false;
+      document.addEventListener('keydown', (e) => {
+        if (e.ctrlKey) {
+          isCtrlPressed = true;
+          console.log('first');
+        }
+      });
+      document.addEventListener('keyup', (e) => {
+        if (e.ctrlKey) {
+          isCtrlPressed = false;
+          console.log('seeeaweqwe12');
+        }
+      });
+      shapeRotation(e, isCtrlPressed, canvas);
+    });
+  }, [canvas]);
 
   return (
     <div className={clsx('w-fit p-4 select-none', className)} ref={containerRef}>
