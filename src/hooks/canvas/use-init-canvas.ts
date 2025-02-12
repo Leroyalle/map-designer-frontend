@@ -1,18 +1,26 @@
+'use client';
 import { useEffect } from 'react';
 import { Canvas as FabricCanvas } from 'fabric';
 import { useCanvasSlice } from '@/store';
+import { ProjectWithItems } from '@/types';
+import { renderItemsOnCanvas } from '@/lib';
 
-export const useInitCanvas = (canvasRef: React.RefObject<HTMLCanvasElement | null>) => {
+export const useInitCanvas = (
+  canvasRef: React.RefObject<HTMLCanvasElement | null>,
+  data: ProjectWithItems,
+) => {
   const setCanvas = useCanvasSlice((state) => state.setCanvas);
 
   useEffect(() => {
     if (!canvasRef.current) return;
+    console.log('bEFORE:', { width: data.canvasWidth, height: data.canvasHeight });
     const initCanvas = new FabricCanvas(canvasRef.current, {
-      width: 1000,
-      height: 500,
+      width: data.canvasWidth,
+      height: data.canvasHeight,
     });
     initCanvas.backgroundColor = 'white';
     initCanvas.renderAll();
+    renderItemsOnCanvas(initCanvas, data.items);
     setCanvas(initCanvas);
 
     return () => {

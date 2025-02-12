@@ -3,7 +3,7 @@ import { Canvas, FabricObject } from 'fabric';
 
 declare module 'fabric' {
   interface FabricObject {
-    id: string;
+    canvasId: string;
     name: string;
     desc: string;
     shortDesc: string;

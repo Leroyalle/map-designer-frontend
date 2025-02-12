@@ -33,7 +33,7 @@ export const SHAPE_TOOLS: ToolConfig[] = [
     createHandler: (canvas) => {
       ShapeFactory.createCircle(canvas, {
         radius: 50,
-        fill: '#00B8D4',
+        fill: '#FF3D00',
         name: generateFrameName(canvas),
       });
     },

@@ -4,7 +4,7 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { Card, CardHeader, CardTitle } from '@/components/ui';
 import { cn } from '@/lib';
 import { ObjectBtns, ObjectParamsMain, ObjectSelector } from './components';
-import { mapDescription, TMapDescSchema } from './schema';
+import { mapDescription, TMapDescSchema } from './schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useCanvasSlice } from '@/store';
 import { toast } from 'sonner';
@@ -39,7 +39,7 @@ export const ObjectParams: React.FC<Props> = ({ className }) => {
       form.setValue('desc', selectedObject.get('desc') || '');
       form.setValue('shortDesc', selectedObject.get('shortDesc') || '');
       form.setValue('time', selectedObject.get('time') || '');
-      form.setValue('floor', selectedObject.get('floor') || '');
+      form.setValue('floor', selectedObject.get('floor') || undefined);
       form.setValue('link', selectedObject.get('link') || '');
     }
     console.log('SELECTED:', selectedObject);

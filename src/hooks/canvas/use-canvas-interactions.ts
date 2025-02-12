@@ -1,3 +1,4 @@
+'use client';
 import { handleMove, handleZoom } from '@/lib';
 import { useEffect, useRef, useState } from 'react';
 

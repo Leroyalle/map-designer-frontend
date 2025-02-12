@@ -1,3 +1,4 @@
+'use client';
 import { Canvas as FabricCanvas, FabricObject, TEvent, TPointerEvent } from 'fabric';
 import { useEffect } from 'react';
 

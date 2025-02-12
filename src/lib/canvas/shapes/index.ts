@@ -1,3 +1,4 @@
 export { ShapeFactory } from './shape-factory';
 export { generateFrameName } from './generate-frame-name';
-export { generateId } from './generate-id';
+export { generateCanvasId } from './generate-canvas-id';
+export { renderItemsOnCanvas } from './render-items-on-canvas';

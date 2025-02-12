@@ -4,14 +4,19 @@ import { cn } from '@/lib/utils';
 import { useCanvasSlice } from '@/store';
 import { Input } from '@heroui/react';
 import { useCanvasDimensions } from '@/hooks';
+import { ProjectWithItems } from '@/types';
 
 interface Props {
+  data: ProjectWithItems;
   className?: string;
 }
 
-export const CanvasSettings: React.FC<Props> = ({ className }) => {
+export const CanvasSettings: React.FC<Props> = ({ data, className }) => {
   const canvas = useCanvasSlice((state) => state.canvas);
-  const { dimensions, handleDimensionChange } = useCanvasDimensions();
+  const { dimensions, handleDimensionChange } = useCanvasDimensions(
+    data.canvasWidth,
+    data.canvasHeight,
+  );
 
   if (!canvas) {
     return null;

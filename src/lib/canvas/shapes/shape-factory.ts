@@ -1,5 +1,5 @@
 import { Canvas, Rect, Circle } from 'fabric';
-import { generateId } from './generate-id';
+import { generateCanvasId } from './generate-canvas-id';
 
 export class ShapeFactory {
   private static defaultObjectConfig = {
@@ -10,7 +10,7 @@ export class ShapeFactory {
 
   static createRect(canvas: Canvas, config: Partial<Rect>) {
     const rect = new Rect({
-      id: generateId(),
+      canvasId: generateCanvasId(),
       width: 100,
       height: 100,
       ...this.defaultObjectConfig,
@@ -22,7 +22,7 @@ export class ShapeFactory {
 
   static createCircle(canvas: Canvas, config: Partial<Circle>) {
     const circle = new Circle({
-      id: generateId(),
+      canvasId: generateCanvasId(),
       radius: 50,
       ...this.defaultObjectConfig,
       ...config,

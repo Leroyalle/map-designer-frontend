@@ -10,5 +10,6 @@ export enum ApiRoutesEnum {
   REGISTER = '/auth/register',
   VERIFY_USER = '/auth/verify',
   PROJECT = '/project',
+  PROJECT_PUBLISH = '/publish',
   PROFILE = '/user/profile',
 }

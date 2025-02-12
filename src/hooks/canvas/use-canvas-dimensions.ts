@@ -2,11 +2,11 @@
 import { useCanvasSlice } from '@/store';
 import { useCallback, useEffect, useState } from 'react';
 
-export const useCanvasDimensions = () => {
+export const useCanvasDimensions = (canvasWidth: number, canvasHeight: number) => {
   const canvas = useCanvasSlice((state) => state.canvas);
   const [dimensions, setDimensions] = useState({
-    width: canvas?.getWidth() || 1000,
-    height: canvas?.getHeight() || 500,
+    width: canvas?.getWidth() || canvasWidth,
+    height: canvas?.getHeight() || canvasHeight,
   });
 
   const handleDimensionChange = useCallback(
