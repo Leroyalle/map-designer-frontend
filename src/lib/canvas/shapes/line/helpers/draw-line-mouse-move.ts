@@ -1,20 +1,19 @@
-import { Canvas, Line, TPointerEvent, TPointerEventInfo } from 'fabric';
+import { Canvas, TPointerEvent, TPointerEventInfo } from 'fabric';
 import { drawLineSnapAngle } from './draw-line-snap-angle';
+import { lineState } from '@/config';
 
 // функция, отрисовывающая линию во время зажатой мышки, которую двигают
 export function drawLineMouseMove(
   e: TPointerEventInfo<TPointerEvent>,
-  tempLine: Line | null,
-  isCtrlPressed: boolean,
+  { tempLine, startpoint, isCtrlPressed }: lineState,
   canvas: Canvas,
-  point1_x: number,
-  point1_y: number,
 ) {
   if (!e.pointer || !tempLine) return;
+  const { x_first, y_first } = drawLineSnapAngle(startpoint.x, startpoint.y, e);
   tempLine.set({
-    x2: isCtrlPressed ? e.pointer.x : drawLineSnapAngle(point1_x, point1_y, e).x_first,
-    y2: isCtrlPressed ? e.pointer.y : drawLineSnapAngle(point1_x, point1_y, e).y_first,
+    x2: isCtrlPressed ? e.pointer.x : x_first,
+    y2: isCtrlPressed ? e.pointer.y : y_first,
   });
   tempLine.setCoords();
-  canvas.renderAll();
+  canvas.requestRenderAll();
 }

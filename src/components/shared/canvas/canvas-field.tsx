@@ -15,6 +15,7 @@ export const CanvasField: React.FC<Props> = ({ className }) => {
   const isPanning = useRef(false);
   const isSpacePressed = useRef(false);
   const lastPosition = useRef<{ x: number; y: number } | null>(null);
+  const isCtrlPressed = useRef(false);
   const [canvasTransform, setCanvasTransform] = useState({
     scale: 1,
     x: 0,
@@ -29,14 +30,22 @@ export const CanvasField: React.FC<Props> = ({ className }) => {
   };
 
   const handleKeyDown = (e: KeyboardEvent) => {
-    if (e.code === 'Space' && !isPanning.current && canvasRef.current) {
+    if (e.code === 'Space' && !isPanning.current) {
       isSpacePressed.current = true;
+      isPanning.current = false;
+    }
+    if (e.code === 'ControlLeft') {
+      isCtrlPressed.current = true;
     }
   };
 
   const handleKeyUp = (e: KeyboardEvent) => {
     if (e.code === 'Space' && canvasRef.current) {
       isSpacePressed.current = false;
+      isPanning.current = true;
+    }
+    if (e.code === 'ControlLeft') {
+      isCtrlPressed.current = false;
     }
   };
 
@@ -90,24 +99,17 @@ export const CanvasField: React.FC<Props> = ({ className }) => {
       };
     }
   }, []);
-  React.useEffect(() => {
+
+  useEffect(() => {
     if (!canvas) return;
+
     canvas.on('object:rotating', (e) => {
-      let isCtrlPressed = false;
-      document.addEventListener('keydown', (e) => {
-        if (e.ctrlKey) {
-          isCtrlPressed = true;
-          console.log('first');
-        }
-      });
-      document.addEventListener('keyup', (e) => {
-        if (e.ctrlKey) {
-          isCtrlPressed = false;
-          console.log('seeeaweqwe12');
-        }
-      });
-      shapeRotation(e, isCtrlPressed, canvas);
+      shapeRotation(e, isCtrlPressed.current, canvas);
     });
+
+    return () => {
+      canvas.off('object:rotating');
+    };
   }, [canvas]);
 
   return (

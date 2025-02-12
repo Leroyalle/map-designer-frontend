@@ -1,29 +1,46 @@
-import { Canvas, Rect, Circle } from 'fabric';
+import { Rect, Circle, Line } from 'fabric';
 
 export class ShapeFactory {
-  static createRect(canvas: Canvas, config: Partial<Rect>) {
+  static createRect(config: Partial<Rect>) {
     const rect = new Rect({
-      left: 100,
-      top: 100,
-      width: 100,
-      height: 100,
-      fill: '#ccc',
+      fill: 'transparent',
+      stroke: 'black',
+      strokeWidth: 4,
+      originX: 'center',
+      originY: 'center',
+
       ...config,
     });
-    canvas.add(rect);
     return rect;
   }
 
-  static createCircle(canvas: Canvas, config: Partial<Circle>) {
+  static createCircle(config: Partial<Circle>) {
     const circle = new Circle({
       left: 100,
       top: 100,
       width: 100,
       height: 100,
-      fill: '#ccc',
+      fill: 'transparent',
+      stroke: 'black',
+      originX: 'center',
+      originY: 'center',
+      strokeWidth: 4,
       ...config,
     });
-    canvas.add(circle);
     return circle;
+  }
+
+  static createLine(points: [number, number, number, number], config?: Partial<Line>) {
+    const line = new Line(points, {
+      stroke: 'black',
+      strokeWidth: 4,
+      fill: null,
+      lockScalingY: true,
+      originX: 'center',
+      originY: 'center',
+
+      ...config,
+    });
+    return line;
   }
 }
