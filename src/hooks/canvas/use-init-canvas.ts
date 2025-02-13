@@ -13,7 +13,6 @@ export const useInitCanvas = (
 
   useEffect(() => {
     if (!canvasRef.current) return;
-    console.log('bEFORE:', { width: data.canvasWidth, height: data.canvasHeight });
     const initCanvas = new FabricCanvas(canvasRef.current, {
       width: data.canvasWidth,
       height: data.canvasHeight,

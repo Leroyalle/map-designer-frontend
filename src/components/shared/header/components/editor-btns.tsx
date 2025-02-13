@@ -12,8 +12,6 @@ export const EditorBtns: React.FC = () => {
   const { canvas } = useCanvasSlice();
   const { id: projectId } = useParams();
 
-  console.log(projectId);
-
   const { publishProject } = usePublishProject();
 
   const handlePublish = () => {

@@ -1,38 +1,30 @@
 import { lineState } from '@/config';
 import { Canvas, TPointerEvent, TPointerEventInfo } from 'fabric';
-import { drawLineFirstPoint, drawLineMouseMove, drawLineSecondPoint } from './helpers';
+import { drawShapeMouseMove, drawShapeSecondPoint } from './helpers';
 
 export const createLineHandler = (canvas: Canvas) => {
   const state: lineState = {
     startpoint: { x: 0, y: 0 },
-    tempLine: null,
+    tempShape: null,
     isCtrlPressed: false,
   };
 
   let lastMouseEvent: TPointerEventInfo<TPointerEvent> | null = null;
 
-  const handleMouseDown = (e: TPointerEventInfo<TPointerEvent>) => {
-    const result = drawLineFirstPoint(e, state, canvas);
-    if (result) {
-      state.startpoint = result.startpoint;
-      state.tempLine = result.tempLine;
-    }
-  };
-
   const handleMouseMove = (e: TPointerEventInfo<TPointerEvent>) => {
     lastMouseEvent = e;
-    drawLineMouseMove(e, state, canvas);
+    drawShapeMouseMove(e, state, canvas);
   };
 
   const handleMouseUp = (e: TPointerEventInfo<TPointerEvent>) => {
-    drawLineSecondPoint(e, state, canvas);
-    state.tempLine = null;
+    drawShapeSecondPoint(e, state, canvas);
+    state.tempShape = null;
   };
 
   document.addEventListener('keydown', (e) => {
     if (e.ctrlKey) {
       state.isCtrlPressed = true;
-      if (state.tempLine && lastMouseEvent) {
+      if (state.tempShape && lastMouseEvent) {
         handleMouseMove(lastMouseEvent);
       }
     }
@@ -41,13 +33,13 @@ export const createLineHandler = (canvas: Canvas) => {
   document.addEventListener('keyup', (e) => {
     if (!e.ctrlKey) {
       state.isCtrlPressed = false;
-      if (state.tempLine && lastMouseEvent) {
+      if (state.tempShape && lastMouseEvent) {
         handleMouseMove(lastMouseEvent);
       }
     }
   });
 
-  canvas.on('mouse:down', handleMouseDown);
+  // canvas.on('mouse:down', handleMouseDown);
   canvas.on('mouse:up', handleMouseUp);
   canvas.on('mouse:move', handleMouseMove);
 };

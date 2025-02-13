@@ -2,20 +2,20 @@ import { Rect, Circle, Line } from 'fabric';
 
 export class ShapeFactory {
   private static defaultObjectConfig = {
-    left: 100,
-    top: 100,
-    fill: '#ccc',
+    // left: 100,
+    // top: 100,
+    fill: 'transparent',
+    stroke: 'black',
+    strokeWidth: 4,
   };
 
   static createRect(config: Partial<Rect>) {
     const rect = new Rect({
-      fill: 'transparent',
-      stroke: 'black',
-      strokeWidth: 4,
-      originX: 'center',
       originY: 'center',
+      originX: 'center',
 
       ...config,
+      ...ShapeFactory.defaultObjectConfig,
     });
     return rect;
   }
@@ -26,11 +26,9 @@ export class ShapeFactory {
       top: 100,
       width: 100,
       height: 100,
-      fill: 'transparent',
-      stroke: 'black',
-      originX: 'center',
       originY: 'center',
-      strokeWidth: 4,
+      originX: 'center',
+      ...ShapeFactory.defaultObjectConfig,
       ...config,
     });
     return circle;
@@ -38,12 +36,11 @@ export class ShapeFactory {
 
   static createLine(points: [number, number, number, number], config?: Partial<Line>) {
     const line = new Line(points, {
-      stroke: 'black',
-      strokeWidth: 4,
-      fill: null,
       lockScalingY: true,
       originX: 'center',
       originY: 'center',
+
+      ...ShapeFactory.defaultObjectConfig,
 
       ...config,
     });

@@ -1,8 +1,12 @@
 'use client';
-import { handleMove, handleZoom } from '@/lib';
+import { drawShapeFirstPoint, drawShapeMouseMove, handleMove, handleZoom } from '@/lib';
+import { useCanvasSlice } from '@/store';
+
 import { useEffect, useRef, useState } from 'react';
 
 export const useCanvasInteractions = (containerRef: React.RefObject<HTMLDivElement | null>) => {
+  const { canvas, setSelectedObject } = useCanvasSlice((state) => state);
+
   const isPanning = useRef(false);
   const isSpacePressed = useRef(false);
   const lastPosition = useRef<{ x: number; y: number } | null>(null);
@@ -26,6 +30,16 @@ export const useCanvasInteractions = (containerRef: React.RefObject<HTMLDivEleme
       isSpacePressed.current = false;
     }
   };
+
+  useEffect(() => {
+    if (!canvas) return;
+    canvas.on('mouse:down', (e) => {
+      drawShapeFirstPoint(e, 'line', canvas);
+    });
+    canvas.on('mouse:move', (e) => {
+      drawShapeMouseMove(e, 'line', canvas);
+    });
+  }, [canvas]);
 
   const handleMouseDown = (e: MouseEvent) => {
     if (isSpacePressed.current) {

@@ -18,7 +18,7 @@ export const CanvasField: React.FC<Props> = ({ data, className }) => {
   useCanvasEvents(
     canvas,
     (object) => {
-      setSelectedObject(object);
+      // setSelectedObject(object);
     },
     () => {
       setSelectedObject(null);

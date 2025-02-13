@@ -11,19 +11,19 @@ interface Props {
 }
 
 export const AuthGuard: React.FC<Props> = ({ children }) => {
-  // const router = useRouter();
-  // const { isPending, isError } = useGetMe();
+  const router = useRouter();
+  const { isPending, isError } = useGetMe();
 
-  // useEffect(() => {
-  //   if (isError) {
-  //     Cookies.remove(AuthTokensEnum.JWT);
-  //     router.push(NavRoutesEnum.AUTH);
-  //   }
-  // }, [isError]);
+  useEffect(() => {
+    if (isError) {
+      Cookies.remove(AuthTokensEnum.JWT);
+      router.push(NavRoutesEnum.AUTH);
+    }
+  }, [isError]);
 
-  // if (isPending || isError) {
-  //   return <Spinner className="absolute bottom-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />;
-  // }
+  if (isPending || isError) {
+    return <Spinner className="absolute bottom-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />;
+  }
 
   return children;
 };
