@@ -34,7 +34,7 @@ export const MapsList: React.FC<Props> = ({ items, isLoading, isError, className
     <div className={cn(gridMesh, className)}>
       <NewMapButton />
       {items.map((item, i) => (
-        <MapItem key={i} name={item.name} imageUrl={item.imageUrl} />
+        <MapItem key={i} id={item.id} name={item.name} imageUrl={item.imageUrl} />
       ))}
     </div>
   );

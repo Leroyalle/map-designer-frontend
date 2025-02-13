@@ -1,6 +1,12 @@
 import { Rect, Circle, Line } from 'fabric';
 
 export class ShapeFactory {
+  private static defaultObjectConfig = {
+    left: 100,
+    top: 100,
+    fill: '#ccc',
+  };
+
   static createRect(config: Partial<Rect>) {
     const rect = new Rect({
       fill: 'transparent',

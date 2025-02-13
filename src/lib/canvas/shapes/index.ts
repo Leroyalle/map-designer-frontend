@@ -1,4 +1,4 @@
 export { ShapeFactory } from './shape-factory';
-export { shapeRotation } from './shape-rotation';
-
-export * from './line';
+export { generateFrameName } from './generate-frame-name';
+export { generateCanvasId } from './generate-canvas-id';
+export { renderItemsOnCanvas } from './render-items-on-canvas';

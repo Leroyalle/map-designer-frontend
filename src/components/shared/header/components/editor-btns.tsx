@@ -1,9 +1,50 @@
 import { Button, Typography } from '@/components/ui';
+import { usePublishProject } from '@/hooks/project';
+import { getSingleId, isCircle } from '@/lib';
+import { useCanvasSlice } from '@/store';
+import { CanvasProjectItem } from '@/types';
 import { Eye } from 'lucide-react';
+import { useParams } from 'next/navigation';
 import React from 'react';
 
 export const EditorBtns: React.FC = () => {
   const isWatchMaps = false;
+  const { canvas } = useCanvasSlice();
+  const { id: projectId } = useParams();
+
+  console.log(projectId);
+
+  const { publishProject } = usePublishProject();
+
+  const handlePublish = () => {
+    if (!canvas || !projectId) return;
+    const canvasWidth = canvas.getWidth();
+    const canvasHeight = canvas.getHeight();
+    const objects: CanvasProjectItem[] = canvas.getObjects().map((obj) => ({
+      canvasId: obj.canvasId,
+      name: obj.name,
+      desc: obj.desc,
+      shortDesc: obj.shortDesc,
+      time: obj.time,
+      floor: obj.floor,
+      link: obj.link,
+      width: obj.width,
+      height: obj.height,
+      radius: isCircle(obj) ? obj.radius : null,
+      fill: obj.fill?.toString(),
+      strokeWidth: obj.strokeWidth,
+      type: obj.type,
+      left: obj.left,
+      top: obj.top,
+      angle: obj.angle,
+      scaleX: obj.scaleX,
+      scaleY: obj.scaleY,
+    }));
+    console.log(objects);
+
+    publishProject({ id: getSingleId(projectId), canvasWidth, canvasHeight, items: objects });
+  };
+
   return (
     <div className="flex flex-row">
       {isWatchMaps ? (
@@ -14,7 +55,7 @@ export const EditorBtns: React.FC = () => {
             <Eye />
             <Typography>Предпросмотр</Typography>
           </Button>
-          <Button>Опубликовать</Button>
+          <Button onClick={handlePublish}>Опубликовать</Button>
         </>
       )}
     </div>
