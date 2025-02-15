@@ -13,3 +13,4 @@ export * from './select';
 export * from './dialog';
 export * from './card';
 export * from './tabs';
+export { Slider } from './slider';

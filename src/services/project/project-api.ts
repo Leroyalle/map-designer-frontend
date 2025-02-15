@@ -1,4 +1,4 @@
-import { $fetch } from '../ferch-wrapper';
+import { $fetch } from '../fetch-wrapper';
 import { ApiRoutesEnum, Project, ProjectResponse, ProjectWithItems, PublishProject } from '@/types';
 
 class ProjectService {

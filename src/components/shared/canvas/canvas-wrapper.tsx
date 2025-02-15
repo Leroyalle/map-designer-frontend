@@ -1,26 +1,37 @@
 'use client';
 import React from 'react';
 import { cn } from '@/lib/utils';
-import { CanvasField } from './canvas-field';
-import { CanvasToolbar } from './canvas-toolbar';
-import { CanvasSettings } from './canvas-settings';
-import { ObjectParams } from './object';
-import { ProjectWithItems } from '@/types';
+import { ProjectResponse, ProjectWithItems } from '@/types';
+import { useQuery } from '@tanstack/react-query';
+import { projectService } from '@/services';
+import { Spinner } from '@heroui/react';
+import { CanvasMode } from './canvas-mode';
 
 interface Props {
-  data: ProjectWithItems;
+  isWatchMode?: boolean;
+  data: ProjectResponse<ProjectWithItems>;
   isOwner: boolean;
   className?: string;
 }
 
-export const CanvasWrapper: React.FC<Props> = ({ data, isOwner, className }) => {
+export const CanvasWrapper: React.FC<Props> = ({ isWatchMode, data, isOwner, className }) => {
+  const { data: project, isLoading } = useQuery({
+    queryKey: ['project', data.data.id],
+    queryFn: () => projectService.getOne(data.data.id),
+    select: (data) => data.data,
+    initialData: data,
+    refetchOnWindowFocus: false,
+    staleTime: 1 * 60 * 1000,
+  });
   console.log('isOwner', isOwner);
+
+  if (isLoading) {
+    return <Spinner className="absolute bottom-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />;
+  }
+
   return (
-    <div className={cn('', className)}>
-      <CanvasSettings data={data} className="fixed top-1/2 left-3 -translate-y-1/2 z-50" />
-      <CanvasField data={data} />
-      <CanvasToolbar className="fixed bottom-3 left-1/2 -translate-x-1/2 z-50" />
-      <ObjectParams className="fixed right-3 top-1/2 -translate-y-1/2 z-50" />
+    <div className={cn('select-none', className)}>
+      <CanvasMode isWatchMode={isWatchMode} project={project} />
     </div>
   );
 };

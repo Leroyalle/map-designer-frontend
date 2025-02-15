@@ -78,7 +78,8 @@ class FetchClient {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || 'Unknown error');
+        console.log(data);
+        throw new Error(data.error || data);
       }
 
       return data;

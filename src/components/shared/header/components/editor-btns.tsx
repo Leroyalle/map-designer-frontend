@@ -20,26 +20,29 @@ export const EditorBtns: React.FC = () => {
     if (!canvas || !projectId) return;
     const canvasWidth = canvas.getWidth();
     const canvasHeight = canvas.getHeight();
-    const objects: CanvasProjectItem[] = canvas.getObjects().map((obj) => ({
-      canvasId: obj.canvasId,
-      name: obj.name,
-      desc: obj.desc,
-      shortDesc: obj.shortDesc,
-      time: obj.time,
-      floor: obj.floor,
-      link: obj.link,
-      width: obj.width,
-      height: obj.height,
-      radius: isCircle(obj) ? obj.radius : null,
-      fill: obj.fill?.toString(),
-      strokeWidth: obj.strokeWidth,
-      type: obj.type,
-      left: obj.left,
-      top: obj.top,
-      angle: obj.angle,
-      scaleX: obj.scaleX,
-      scaleY: obj.scaleY,
-    }));
+    const objects: CanvasProjectItem[] = canvas
+      .getObjects()
+      .filter((obj) => obj.name !== 'background')
+      .map((obj) => ({
+        canvasId: obj.canvasId,
+        name: obj.name,
+        desc: obj.desc,
+        shortDesc: obj.shortDesc,
+        time: obj.time,
+        floor: obj.floor,
+        link: obj.link,
+        width: obj.width,
+        height: obj.height,
+        radius: isCircle(obj) ? obj.radius : null,
+        fill: obj.fill?.toString(),
+        strokeWidth: obj.strokeWidth,
+        type: obj.type,
+        left: obj.left,
+        top: obj.top,
+        angle: obj.angle,
+        scaleX: obj.scaleX,
+        scaleY: obj.scaleY,
+      }));
     console.log(objects);
 
     publishProject({ id: getSingleId(projectId), canvasWidth, canvasHeight, items: objects });

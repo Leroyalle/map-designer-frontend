@@ -14,8 +14,8 @@ export default function ProjectLayout({
 }>) {
   return (
     <HomeProviders>
-      <div className="min-h-screen max-h-screen overflow-hidden bg-gray-200">
-        <Header isEditMode />
+      <div className="min-h-screen max-h-screen overflow-hidden bg-gray-500">
+        {/* <Header isEditMode className="select-none fixed top-0 z-50 w-full" /> */}
         <main>{children}</main>
       </div>
     </HomeProviders>
