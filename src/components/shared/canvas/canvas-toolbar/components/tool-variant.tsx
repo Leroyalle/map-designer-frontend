@@ -11,7 +11,10 @@ interface Props {
 export const ToolVariant: React.FC<Props> = ({ image, toolName, onClick, className }) => {
   return (
     <div
-      className={cn('flex gap-4 items-center cursor-pointer select-none', className)}
+      className={cn(
+        'px-5 py-2.5 flex gap-4 items-center cursor-pointer select-none hover:bg-background/10',
+        className,
+      )}
       onClick={onClick}>
       <img src={image} alt={toolName} className="w-6 h-6" />
       <span>{toolName}</span>

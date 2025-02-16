@@ -1,20 +1,24 @@
 import { ShapeType } from '@/types';
-import { Canvas, TPointerEvent, TPointerEventInfo } from 'fabric';
+import { Canvas, FabricObject, TPointerEvent, TPointerEventInfo } from 'fabric';
 import { selectDrawShape } from '../select-draw-shape';
+import { Point } from 'framer-motion';
 
 // функция, для отрисовки фигуры от первой точки, установка первой точки
 export function drawShapeFirstPoint(
   elem: TPointerEventInfo<TPointerEvent>,
   shapeType: ShapeType,
+  activeToolRef: React.MutableRefObject<FabricObject | null>,
+  startPoint: { current: Point | null },
   canvas: Canvas,
 ) {
-  // const target = canvas.findTarget(elem.e);
-
   const pointer = canvas.getPointer(elem.e);
   canvas.selection = false;
-  const shape = selectDrawShape(shapeType, pointer);
-  if (shape) canvas.add(shape);
 
-  // canvas.setActiveObject(target);
-  // target.setCoords();
+  const shape = selectDrawShape(shapeType, pointer);
+  if (shape) {
+    canvas.add(shape);
+    activeToolRef.current = shape;
+    startPoint.current = pointer;
+    return startPoint;
+  }
 }

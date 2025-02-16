@@ -38,7 +38,6 @@ export const EditorBtns: React.FC = () => {
       scaleX: obj.scaleX,
       scaleY: obj.scaleY,
     }));
-    console.log(objects);
 
     publishProject({ id: getSingleId(projectId), canvasWidth, canvasHeight, items: objects });
   };

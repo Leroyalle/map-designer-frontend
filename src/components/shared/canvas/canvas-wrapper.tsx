@@ -14,7 +14,6 @@ interface Props {
 }
 
 export const CanvasWrapper: React.FC<Props> = ({ data, isOwner, className }) => {
-  console.log('isOwner', isOwner);
   return (
     <div className={cn('', className)}>
       <CanvasSettings data={data} className="fixed top-1/2 left-3 -translate-y-1/2 z-50" />

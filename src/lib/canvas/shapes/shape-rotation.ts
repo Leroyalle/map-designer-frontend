@@ -15,9 +15,18 @@ export function shapeRotation(
     const closestAngle = allowedAngles.reduce((prev, curr) => {
       return Math.abs(curr - currentAngle) < Math.abs(prev - currentAngle) ? curr : prev;
     });
-    object.set({
-      angle: closestAngle,
-    });
+    if (object.originX !== 'center' || object.originY !== 'center') {
+      console.log('not ctnter');
+      object.set({
+        originX: 'center',
+        originY: 'center',
+      });
+      return;
+    } else {
+      object.set({
+        angle: closestAngle,
+      });
+    }
 
     canvas.renderAll();
   }

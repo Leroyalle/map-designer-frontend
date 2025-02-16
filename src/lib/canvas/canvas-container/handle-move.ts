@@ -1,7 +1,10 @@
+import { Canvas, Point } from 'fabric';
+
 export const handleMove = (
   e: MouseEvent,
   setCanvasTransform: React.Dispatch<React.SetStateAction<{ x: number; y: number; scale: number }>>,
-  lastPosition: React.RefObject<{ x: number; y: number } | null>,
+  lastPosition: React.RefObject<Point | null>,
+  canvas: Canvas,
 ) => {
   if (!lastPosition.current) return;
 
@@ -14,5 +17,5 @@ export const handleMove = (
     y: prevTransform.y + deltaY,
   }));
 
-  lastPosition.current = { x: e.clientX, y: e.clientY };
+  lastPosition.current = canvas.getPointer(e);
 };

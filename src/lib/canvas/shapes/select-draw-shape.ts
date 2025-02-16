@@ -19,7 +19,6 @@ export const selectDrawShape = (shapeType: ShapeType, pointer: Point) => {
       return ShapeFactory.createCircle({
         left: pointer.x,
         top: pointer.y,
-        radius: 0,
       });
 
     default:
