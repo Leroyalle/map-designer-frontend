@@ -1,6 +1,6 @@
 import { Canvas } from 'fabric';
 import { ShapeFactory } from '../lib/canvas/shapes/shape-factory';
-import { generateFrameName } from '@/lib';
+import { generateFrameName, getRandomColor } from '@/lib';
 
 export type ToolConfig = {
   id: string;
@@ -22,6 +22,7 @@ export const SHAPE_TOOLS: ToolConfig[] = [
         height: 100,
         fill: '#FF3D00',
         name: generateFrameName(canvas),
+        placeColor: getRandomColor(),
       });
     },
     shortcut: 'KeyR',
@@ -35,6 +36,7 @@ export const SHAPE_TOOLS: ToolConfig[] = [
         radius: 50,
         fill: '#FF3D00',
         name: generateFrameName(canvas),
+        placeColor: getRandomColor(),
       });
     },
     shortcut: 'KeyC',

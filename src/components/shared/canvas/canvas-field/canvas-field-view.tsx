@@ -3,6 +3,7 @@ import { useCanvasEvents, useInitCanvasView } from '@/hooks';
 import { useCanvasSlice } from '@/store';
 import { ProjectWithItems } from '@/types';
 import { cn } from '@/lib';
+import { PlacesList } from '../places-list';
 
 interface Props {
   project: ProjectWithItems;
@@ -21,10 +22,12 @@ export const CanvasFieldView: React.FC<Props> = ({ project, className }) => {
     () => {
       setSelectedObject(null);
     },
+    true,
   );
 
   return (
     <div className={cn('view-mode', className)}>
+      <PlacesList items={project.items} className="fixed left-0 top-1/2 -translate-y-1/2 z-50" />
       <canvas id="canvas" ref={canvasRef} />
     </div>
   );

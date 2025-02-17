@@ -1,16 +1,15 @@
 'use client';
-import { RefObject, useEffect, useState } from 'react';
-import { Canvas as FabricCanvas, FabricImage } from 'fabric';
+import { RefObject, useEffect } from 'react';
+import { Canvas as FabricCanvas } from 'fabric';
 import { useCanvasSlice } from '@/store';
 import { ProjectWithItems } from '@/types';
-import { getAbsoluteUrl, renderItemsOnCanvas } from '@/lib';
+import { renderItemsOnCanvas } from '@/lib';
 
 export const useInitCanvasView = (
   canvasRef: RefObject<HTMLCanvasElement | null>,
   data: ProjectWithItems,
 ) => {
-  const { canvas, setCanvas } = useCanvasSlice();
-  const [image, setImage] = useState<FabricImage | null>(null);
+  const { setCanvas } = useCanvasSlice();
 
   useEffect(() => {
     if (canvasRef.current) {
@@ -19,18 +18,14 @@ export const useInitCanvasView = (
         height: data.canvasHeight,
       });
       initCanvas.backgroundColor = 'white';
-
-      const image = new Image();
-      image.src = getAbsoluteUrl(data.imageUrl);
-
-      image.addEventListener('load', () => {
-        const fabricImage = new FabricImage(image, {
+      initCanvas.selection = false;
+      initCanvas.defaultCursor = 'default';
+      initCanvas.hoverCursor = 'default';
+      initCanvas.on('object:added', (e) => {
+        e.target.set({
           selectable: false,
-          name: 'background',
+          evented: false,
         });
-        initCanvas.add(fabricImage);
-        initCanvas.sendObjectToBack(fabricImage);
-        setImage(fabricImage);
       });
       initCanvas.renderAll();
       renderItemsOnCanvas(initCanvas, data.items);

@@ -11,6 +11,7 @@ import { authService } from '@/services';
 import { useRouter } from 'next/navigation';
 import { NavRoutesEnum } from '@/types';
 import { saveAuthCookie } from '@/lib';
+import { FetchError } from '@/services/api/fetch-error';
 
 interface Props {
   className?: string;
@@ -37,7 +38,7 @@ export const Login: React.FC<Props> = ({ className }) => {
         form.setValue('password', '');
         return 'Успешный вход в аккаунт! Секунду...';
       },
-      error: 'Ошибка! Повторите попытку',
+      error: (error: FetchError) => error.message,
     });
   };
 

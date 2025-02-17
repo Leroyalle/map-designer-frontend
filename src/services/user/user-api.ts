@@ -1,4 +1,4 @@
-import { $fetch } from '../fetch-wrapper';
+import { $fetch } from '../api';
 import { ApiRoutesEnum, User } from '@/types';
 
 class UserService {

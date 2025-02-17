@@ -3,50 +3,25 @@ import { cn } from '@/lib';
 import React from 'react';
 import { PlaceItem } from './components';
 import { FilteredInput } from '@/components/ui';
+import { ProjectItem } from '@/types';
 
 interface Props {
+  items: ProjectItem[];
   className?: string;
 }
-const mapItems = [
-  {
-    title: 'Арт-маркет',
-    floor: 1,
-    color: '#8596BD',
-  },
-  {
-    title: 'Большой лекторий',
-    floor: -1,
-    color: '#FFBA00',
-  },
-  {
-    title: 'Зона полезной программы',
-    floor: 3,
-    color: '#FE70AF',
-  },
-  {
-    title: 'Гардеробная',
-    floor: 2,
-    color: '#48BE38',
-  },
-  {
-    title: 'Аквариум',
-    floor: 1,
-    color: '#77DDE7',
-  },
-];
 
-export const PlacesList: React.FC<Props> = ({ className }) => {
+export const PlacesList: React.FC<Props> = ({ items, className }) => {
   const [searchValue, setSearchValue] = React.useState('');
 
-  const filteredItems = mapItems.filter((item) =>
-    item.title.toLowerCase().includes(searchValue.toLowerCase()),
+  const filteredItems = items.filter((item) =>
+    item.name.toLowerCase().includes(searchValue.toLowerCase()),
   );
-
+  console.log(items);
   const clearInput = () => setSearchValue('');
   return (
     <div
       className={cn(
-        'max-w-[364px]  bg-background overflow-auto max-h-screen rounded-[10px] shadow-md flex flex-col scrollbar',
+        'max-w-[364px] bg-background overflow-auto rounded-[10px] shadow-md flex flex-col scrollbar',
         className,
       )}>
       <FilteredInput
@@ -63,7 +38,7 @@ export const PlacesList: React.FC<Props> = ({ className }) => {
           <div key={id} className="mb-5">
             {id > 0 && <hr className="border-[#E9ECEE] border-1 mb-5" />}
 
-            <PlaceItem color={item.color} title={item.title} floor={item.floor} />
+            <PlaceItem color={item.placeColor} title={item.name} floor={item.floor} />
           </div>
         ))}
       </div>

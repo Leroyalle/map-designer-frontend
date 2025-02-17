@@ -1,5 +1,6 @@
 import { AuthTokensEnum } from '@/types';
 import Cookie from 'js-cookie';
+import { FetchError } from './fetch-error';
 
 class FetchClient {
   private API_URL = process.env.NEXT_PUBLIC_API_URL as string;
@@ -79,7 +80,7 @@ class FetchClient {
 
       if (!response.ok) {
         console.log(data);
-        throw new Error(data.error || data);
+        throw new FetchError(data);
       }
 
       return data;

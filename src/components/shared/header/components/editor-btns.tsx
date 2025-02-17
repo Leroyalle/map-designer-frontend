@@ -31,6 +31,7 @@ export const EditorBtns: React.FC = () => {
         time: obj.time,
         floor: obj.floor,
         link: obj.link,
+        placeColor: obj.placeColor,
         width: obj.width,
         height: obj.height,
         radius: isCircle(obj) ? obj.radius : null,
@@ -43,8 +44,6 @@ export const EditorBtns: React.FC = () => {
         scaleX: obj.scaleX,
         scaleY: obj.scaleY,
       }));
-    console.log(objects);
-
     publishProject({ id: getSingleId(projectId), canvasWidth, canvasHeight, items: objects });
   };
 

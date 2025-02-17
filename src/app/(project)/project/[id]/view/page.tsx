@@ -1,5 +1,4 @@
 import { CanvasWrapper } from '@/components/shared';
-import { Container } from '@/components/ui';
 import { projectService } from '@/services';
 import { AuthTokensEnum } from '@/types';
 import { cookies } from 'next/headers';
@@ -17,13 +16,9 @@ export default async function ProjectView({ params }: { params: Promise<{ id: st
       return notFound();
     }
 
-    return (
-      // <Container>
-      <CanvasWrapper isWatchMode data={data} isOwner={data.isOwner} />
-      // </Container>
-    );
+    return <CanvasWrapper isWatchMode data={data} isOwner={data.isOwner} />;
   } catch (error) {
-    console.log('Project server error', error);
+    console.log('Project view server error', error);
     return notFound();
   }
 }
