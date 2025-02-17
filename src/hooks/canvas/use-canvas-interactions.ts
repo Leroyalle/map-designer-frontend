@@ -1,8 +1,10 @@
 'use client';
 import {
-  drawShapeFirstPoint,
   drawShapeMouseMove,
   handleMove,
+  handleMoveDrawShape,
+  handleStartDrawShape,
+  handleStopDrawShape,
   handleZoom,
   shapeRotation,
 } from '@/lib';
@@ -15,11 +17,11 @@ export const useCanvasInteractions = (containerRef: React.RefObject<HTMLDivEleme
   const { canvas, selectedTool, selectedObject, setSelectedObject, setSelectedTool } =
     useCanvasSlice((state) => state);
   const isPanning = useRef(false);
-  const isSpacePressed = useRef(false);
+  const activeButtonPressed = useRef<KeyboardEvent['code'] | null>(null);
   const startPoint = useRef<Point | null>(null);
   const [isCtrlPressed, setIsCtrlPressed] = useState(false);
   const activeToolRef = useRef<FabricObject | null>(null);
-  const lastPosition = useRef<Point | null>(null);
+  const lastPosition = useRef<{ x: number; y: number } | null>(null);
   const [canvasTransform, setCanvasTransform] = useState({ scale: 1, x: 0, y: 0 });
 
   const handleWheel = (e: WheelEvent) => {
@@ -30,21 +32,15 @@ export const useCanvasInteractions = (containerRef: React.RefObject<HTMLDivEleme
   };
 
   const handleKeyDown = (e: KeyboardEvent) => {
-    if (e.code === 'Space' && !isPanning.current) {
-      isSpacePressed.current = true;
-    }
+    activeButtonPressed.current = e.code;
     if (e.code === 'ControlLeft' && !isPanning.current) {
       setIsCtrlPressed(true);
     }
   };
 
-  const handleKeyUp = (e: KeyboardEvent) => {
-    if (e.code === 'Space') {
-      isSpacePressed.current = false;
-    }
-    if (e.code === 'ControlLeft' && !isPanning.current) {
-      setIsCtrlPressed(false);
-    }
+  const handleKeyUp = () => {
+    setIsCtrlPressed(false);
+    activeButtonPressed.current = null;
   };
 
   useEffect(() => {
@@ -56,66 +52,45 @@ export const useCanvasInteractions = (containerRef: React.RefObject<HTMLDivEleme
       !canvas
     )
       return;
-
     drawShapeMouseMove(
       lastPosition.current,
       selectedTool.type,
       activeToolRef.current,
-      isCtrlPressed,
+      activeButtonPressed.current === 'ControlLeft',
       startPoint.current,
       canvas,
     );
   }, [isCtrlPressed]);
 
+  const handleMouseUp = () => {
+    if (!canvas) return;
+    isPanning.current = false;
+    canvas.selection = true;
+    lastPosition.current = null;
+  };
+
   useEffect(() => {
     if (!canvas || !selectedTool || selectedObject) return;
 
     canvas.on('mouse:down', (e) => {
-      if (e.target) return;
-      drawShapeFirstPoint(e, selectedTool.type, activeToolRef, startPoint, canvas);
+      handleStartDrawShape(e, canvas, selectedTool, activeToolRef, startPoint);
     });
-
     canvas.on('mouse:move', (e) => {
-      if (!activeToolRef.current || !startPoint.current) return;
-      const pointer = canvas.getPointer(e.e);
-      lastPosition.current = pointer;
-
-      drawShapeMouseMove(
-        pointer,
-        selectedTool.type,
-        activeToolRef.current,
-        isCtrlPressed,
-        startPoint.current,
+      handleMoveDrawShape(
+        e,
         canvas,
+        selectedTool,
+        activeToolRef,
+        startPoint,
+        lastPosition,
+        activeButtonPressed,
       );
     });
-
     canvas.on('mouse:up', () => {
-      if (
-        activeToolRef.current?.originX !== 'center' ||
-        activeToolRef.current?.originY !== 'center'
-      ) {
-        activeToolRef.current?.set({
-          originX: 'center',
-          originY: 'center',
-          top:
-            activeToolRef.current.top +
-            activeToolRef.current.strokeWidth / 2 +
-            activeToolRef.current.height / 2,
-          left:
-            activeToolRef.current.left +
-            activeToolRef.current.strokeWidth / 2 +
-            activeToolRef.current.width / 2,
-        });
-      }
-      activeToolRef.current = null;
-      setSelectedObject(null);
-      setSelectedTool(null);
+      handleStopDrawShape(activeToolRef, setSelectedObject, setSelectedTool);
     });
-
     canvas.on('object:rotating', (e) => {
-      console.log(isCtrlPressed);
-      shapeRotation(e, isCtrlPressed, canvas);
+      shapeRotation(e, activeButtonPressed.current === 'ControlLeft', canvas);
     });
 
     return () => {
@@ -123,33 +98,21 @@ export const useCanvasInteractions = (containerRef: React.RefObject<HTMLDivEleme
         canvas.off('mouse:down');
         canvas.off('mouse:move');
         canvas.off('mouse:up');
+        canvas.off('object:rotating');
       }
     };
-  }, [canvas, selectedTool, isCtrlPressed]);
+  }, [canvas, selectedTool, activeButtonPressed.current]);
 
   const handleMouseDown = (e: MouseEvent) => {
-    if (isSpacePressed.current && canvas) {
-      canvas.defaultCursor = 'grab';
-      canvas.hoverCursor = 'grab';
-      canvas.requestRenderAll();
+    if (canvas && activeButtonPressed.current === 'Space') {
       isPanning.current = true;
       canvas.selection = false;
       lastPosition.current = { x: e.x, y: e.y };
     }
   };
 
-  const handleMouseUp = () => {
-    if (!canvas) return;
-    canvas.defaultCursor = 'default';
-    canvas.hoverCursor = 'default';
-    canvas.requestRenderAll();
-    isPanning.current = false;
-    canvas.selection = true;
-    lastPosition.current = null;
-  };
-
   const handleMouseMove = (e: MouseEvent) => {
-    if (isPanning.current && isSpacePressed.current && containerRef.current) {
+    if (isPanning.current && containerRef.current && activeButtonPressed.current === 'Space') {
       handleMove(e, setCanvasTransform, lastPosition);
     }
   };
@@ -174,3 +137,14 @@ export const useCanvasInteractions = (containerRef: React.RefObject<HTMLDivEleme
 
   return { canvasTransform, setCanvasTransform };
 };
+// src/
+// ├── hooks/
+// │   ├── useKeyboard.ts
+// │   ├── usePanning.ts
+// │   └── useCanvasEvents.ts
+// ├── lib/
+// │   ├── drawShapeMouseMove.ts
+// │   ├── handleZoom.ts
+// │   └── shapeRotation.ts
+// └── components/
+//     └── CanvasComponent.tsx

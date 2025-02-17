@@ -4,7 +4,7 @@ import { drawLineSnapAngle } from '../draw-line-snap-angle';
 
 // функция, отрисовывающая линию во время зажатой мышки, которую двигают
 export function drawShapeMouseMove(
-  pointer: Point,
+  pointer: { x: number; y: number },
   shapeType: ShapeType,
   activeTool: FabricObject,
   isCtrlPressed: boolean,

@@ -1,10 +1,8 @@
-import { Point } from 'fabric';
-
 //привязка к прямым углам. Разброс по умолчанию: 5
 export function drawLineSnapAngle(
   x_first: number,
   y_first: number,
-  pointer: Point,
+  pointer: { x: number; y: number },
   spread: number = 5,
 ) {
   const angle = Math.round(
