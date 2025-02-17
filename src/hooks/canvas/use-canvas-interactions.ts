@@ -66,6 +66,7 @@ export const useCanvasInteractions = (containerRef: React.RefObject<HTMLDivEleme
       canvas,
     );
   }, [isCtrlPressed]);
+
   useEffect(() => {
     if (!canvas || !selectedTool || selectedObject) return;
 
@@ -78,6 +79,7 @@ export const useCanvasInteractions = (containerRef: React.RefObject<HTMLDivEleme
       if (!activeToolRef.current || !startPoint.current) return;
       const pointer = canvas.getPointer(e.e);
       lastPosition.current = pointer;
+
       drawShapeMouseMove(
         pointer,
         selectedTool.type,
@@ -107,12 +109,12 @@ export const useCanvasInteractions = (containerRef: React.RefObject<HTMLDivEleme
         });
       }
       activeToolRef.current = null;
-      canvas.selection = true;
       setSelectedObject(null);
       setSelectedTool(null);
     });
 
     canvas.on('object:rotating', (e) => {
+      console.log(isCtrlPressed);
       shapeRotation(e, isCtrlPressed, canvas);
     });
 
@@ -127,19 +129,28 @@ export const useCanvasInteractions = (containerRef: React.RefObject<HTMLDivEleme
 
   const handleMouseDown = (e: MouseEvent) => {
     if (isSpacePressed.current && canvas) {
+      canvas.defaultCursor = 'grab';
+      canvas.hoverCursor = 'grab';
+      canvas.requestRenderAll();
       isPanning.current = true;
-      lastPosition.current = canvas.getPointer(e);
+      canvas.selection = false;
+      lastPosition.current = { x: e.x, y: e.y };
     }
   };
 
   const handleMouseUp = () => {
+    if (!canvas) return;
+    canvas.defaultCursor = 'default';
+    canvas.hoverCursor = 'default';
+    canvas.requestRenderAll();
     isPanning.current = false;
+    canvas.selection = true;
     lastPosition.current = null;
   };
 
   const handleMouseMove = (e: MouseEvent) => {
-    if (isPanning.current && isSpacePressed.current && containerRef.current && canvas) {
-      handleMove(e, setCanvasTransform, lastPosition, canvas);
+    if (isPanning.current && isSpacePressed.current && containerRef.current) {
+      handleMove(e, setCanvasTransform, lastPosition);
     }
   };
 
@@ -159,7 +170,7 @@ export const useCanvasInteractions = (containerRef: React.RefObject<HTMLDivEleme
       document.removeEventListener('mouseup', handleMouseUp);
       document.removeEventListener('mousemove', handleMouseMove);
     };
-  }, []);
+  }, [canvas]);
 
   return { canvasTransform, setCanvasTransform };
 };

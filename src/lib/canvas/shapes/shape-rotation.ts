@@ -16,7 +16,6 @@ export function shapeRotation(
       return Math.abs(curr - currentAngle) < Math.abs(prev - currentAngle) ? curr : prev;
     });
     if (object.originX !== 'center' || object.originY !== 'center') {
-      console.log('not ctnter');
       object.set({
         originX: 'center',
         originY: 'center',
