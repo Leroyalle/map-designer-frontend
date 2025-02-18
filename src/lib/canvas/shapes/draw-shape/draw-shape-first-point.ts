@@ -4,7 +4,7 @@ import { selectDrawShape } from '../select-draw-shape';
 import { Point } from 'framer-motion';
 
 // функция, для отрисовки фигуры от первой точки, установка первой точки
-export function drawShapeFirstPoint(
+export async function drawShapeFirstPoint(
   elem: TPointerEventInfo<TPointerEvent>,
   shapeType: ShapeType,
   activeToolRef: React.MutableRefObject<FabricObject | null>,
@@ -14,7 +14,8 @@ export function drawShapeFirstPoint(
   const pointer = canvas.getPointer(elem.e);
   canvas.selection = false;
 
-  const shape = selectDrawShape(shapeType, pointer);
+  const shape = await selectDrawShape(shapeType, pointer);
+  console.log(shape);
   if (shape) {
     canvas.add(shape);
     activeToolRef.current = shape;

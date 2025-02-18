@@ -1,34 +1,41 @@
-import { Rect, Line, Ellipse } from 'fabric';
+import { Rect, Line, Ellipse, FabricImage, ImageSource } from 'fabric';
 
 export class ShapeFactory {
   private static defaultObjectConfig = {
     fill: 'transparent',
+    strokeUniform: true,
+    noScaleCache: false,
+    // stroke: '#bcbcbc',
     stroke: 'black',
-    strokeWidth: 4,
+    strokeWidth: 2,
   };
 
   static createRect(config: Partial<Rect>) {
-    const rect = new Rect({
+    return new Rect({
       originY: 'top',
       originX: 'left',
       ...config,
       ...ShapeFactory.defaultObjectConfig,
     });
-    return rect;
   }
 
   static createCircle(config: Partial<Ellipse>) {
-    const ellipse = new Ellipse({
+    return new Ellipse({
       originY: 'center',
       originX: 'center',
       ...ShapeFactory.defaultObjectConfig,
       ...config,
     });
-    return ellipse;
+  }
+
+  static createImg(image: ImageSource, config: Partial<FabricImage>) {
+    return new FabricImage(image, {
+      ...config,
+    });
   }
 
   static createLine(points: [number, number, number, number], config?: Partial<Line>) {
-    const line = new Line(points, {
+    return new Line(points, {
       lockScalingY: true,
       originY: 'center',
       originX: 'center',
@@ -36,6 +43,5 @@ export class ShapeFactory {
 
       ...config,
     });
-    return line;
   }
 }

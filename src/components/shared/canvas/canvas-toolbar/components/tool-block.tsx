@@ -17,10 +17,6 @@ export const ToolBlock: React.FC<Props> = ({ title, tools, className }) => {
   const handleToolClick = (tool: ToolConfig) => {
     if (!canvas) return;
     setSelectedTool(tool);
-    // canvas.selection = false;
-    // if (!canvas) return;
-    // tool.createHandler(canvas);
-    // canvas.requestRenderAll();
   };
 
   return (

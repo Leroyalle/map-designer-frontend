@@ -98,7 +98,6 @@ export const useCanvasInteractions = (containerRef: React.RefObject<HTMLDivEleme
         canvas.off('mouse:down');
         canvas.off('mouse:move');
         canvas.off('mouse:up');
-        canvas.off('object:rotating');
       }
     };
   }, [canvas, selectedTool, activeButtonPressed.current]);
