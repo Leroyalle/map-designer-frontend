@@ -7,7 +7,7 @@ export class ShapeFactory {
     noScaleCache: false,
     // stroke: '#bcbcbc',
     stroke: 'black',
-    strokeWidth: 2,
+    strokeWidth: 4,
   };
 
   static createRect(config: Partial<Rect>) {

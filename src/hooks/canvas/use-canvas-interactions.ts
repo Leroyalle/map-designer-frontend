@@ -87,7 +87,7 @@ export const useCanvasInteractions = (containerRef: React.RefObject<HTMLDivEleme
       );
     });
     canvas.on('mouse:up', () => {
-      handleStopDrawShape(activeToolRef, setSelectedObject, setSelectedTool);
+      handleStopDrawShape(activeToolRef, setSelectedObject, setSelectedTool, selectedTool.type);
     });
     canvas.on('object:rotating', (e) => {
       shapeRotation(e, activeButtonPressed.current === 'ControlLeft', canvas);
