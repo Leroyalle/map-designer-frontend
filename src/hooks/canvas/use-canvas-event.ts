@@ -9,22 +9,23 @@ type FabricEvent = Partial<TEvent<TPointerEvent>> & {
 export const useCanvasEvents = (
   canvas: FabricCanvas | null,
   setSelectedObject: (object: FabricObject | null) => void,
-  clearObjectSettings: () => void,
+  setObjects: (objects: FabricObject[]) => void,
 ) => {
   useEffect(() => {
     if (!canvas) return;
-
     const handleSelectionCreated = (event: FabricEvent) => {
+      setObjects(event.selected);
       setSelectedObject(event.selected[0]);
     };
 
     const handleSelectionUpdated = (event: FabricEvent) => {
+      setObjects(event.selected);
       setSelectedObject(event.selected[0]);
     };
 
     const handleSelectionCleared = () => {
+      setObjects([]);
       setSelectedObject(null);
-      clearObjectSettings();
     };
 
     canvas.on('selection:created', handleSelectionCreated);
@@ -36,5 +37,5 @@ export const useCanvasEvents = (
       canvas.off('selection:updated', handleSelectionUpdated);
       canvas.off('selection:cleared', handleSelectionCleared);
     };
-  }, [canvas, setSelectedObject, clearObjectSettings]);
+  }, [canvas, setSelectedObject, setObjects]);
 };

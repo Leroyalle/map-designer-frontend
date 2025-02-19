@@ -5,7 +5,6 @@ export class ShapeFactory {
     fill: 'transparent',
     strokeUniform: true,
     noScaleCache: false,
-    // stroke: '#bcbcbc',
     stroke: 'black',
     strokeWidth: 4,
   };
@@ -30,6 +29,8 @@ export class ShapeFactory {
 
   static createImg(image: ImageSource, config: Partial<FabricImage>) {
     return new FabricImage(image, {
+      scaleX: 0,
+      scaleY: 0,
       ...config,
     });
   }
@@ -40,7 +41,6 @@ export class ShapeFactory {
       originY: 'center',
       originX: 'center',
       ...ShapeFactory.defaultObjectConfig,
-
       ...config,
     });
   }

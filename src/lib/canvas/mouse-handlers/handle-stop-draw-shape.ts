@@ -10,22 +10,33 @@ export const handleStopDrawShape = (
   shapeType: ShapeType,
 ) => {
   if (activeToolRef.current?.originX !== 'center' || activeToolRef.current?.originY !== 'center') {
+    if (shapeType === 'door' || shapeType === 'elevator' || shapeType === 'ladder') {
+      activeToolRef.current?.set({
+        top:
+          activeToolRef.current.top +
+          (activeToolRef.current.height * activeToolRef.current.scaleY) / 2,
+        left:
+          activeToolRef.current.left +
+          (activeToolRef.current.width * activeToolRef.current.scaleX) / 2,
+      });
+    } else {
+      activeToolRef.current?.set({
+        top:
+          activeToolRef.current.top +
+          activeToolRef.current.strokeWidth / 2 +
+          activeToolRef.current.height / 2,
+        left:
+          activeToolRef.current.left +
+          activeToolRef.current.strokeWidth / 2 +
+          activeToolRef.current.width / 2,
+      });
+    }
     activeToolRef.current?.set({
       originX: 'center',
       originY: 'center',
-      top:
-        activeToolRef.current.top +
-        activeToolRef.current.strokeWidth / 2 +
-        activeToolRef.current.height / 2,
-      left:
-        activeToolRef.current.left +
-        activeToolRef.current.strokeWidth / 2 +
-        activeToolRef.current.width / 2,
     });
   }
   if (!activeToolRef.current) return;
-  {
-  }
   switch (shapeType) {
     case 'line':
       activeToolRef.current.setControlsVisibility({
@@ -38,6 +49,7 @@ export const handleStopDrawShape = (
       });
       break;
     case 'door':
+    case 'elevator':
       activeToolRef.current.setControlsVisibility({
         mt: false,
         ml: false,
@@ -47,7 +59,7 @@ export const handleStopDrawShape = (
       break;
 
     default:
-      return;
+      break;
   }
   activeToolRef.current = null;
   setSelectedObject(null);

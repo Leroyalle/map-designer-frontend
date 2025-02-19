@@ -12,17 +12,13 @@ interface Props {
 export const CanvasField: React.FC<Props> = ({ data, className }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const { canvas, setSelectedObject } = useCanvasSlice();
+  const { canvas, setSelectedObject, setObjects } = useCanvasSlice();
   const { canvasTransform } = useCanvasInteractions(containerRef);
   useInitCanvas(canvasRef, data);
   useCanvasEvents(
     canvas,
-    (object) => {
-      // setSelectedObject(object);
-    },
-    () => {
-      setSelectedObject(null);
-    },
+    (object) => setSelectedObject(object),
+    (objects) => setObjects(objects),
   );
 
   useEffect(() => {
