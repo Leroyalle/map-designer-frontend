@@ -10,14 +10,49 @@ export const renderItemsOnCanvas = (canvas: Canvas, items: ProjectItem[]) => {
     switch (item.type) {
       case 'rect':
         fabricObject = new Rect({
-          ...item,
+          canvasId: item.canvasId,
+          name: item.name,
+          desc: item.desc,
+          shortDesc: item.shortDesc,
+          time: item.time,
+          floor: item.floor,
+          link: item.link,
+          placeColor: item.placeColor,
+          width: item.width,
+          height: item.height,
+          radius: item.radius ?? undefined,
+          backgroundColor: item.backgroundColor,
+          strokeWidth: item.strokeWidth,
+          fill: item.fill,
+          left: item.left,
+          top: item.top,
+          angle: item.angle,
+          scaleX: item.scaleX,
+          scaleY: item.scaleY,
         });
         break;
 
       case 'circle':
         fabricObject = new Circle({
-          ...item,
+          canvasId: item.canvasId,
+          name: item.name,
+          desc: item.desc,
+          shortDesc: item.shortDesc,
+          time: item.time,
+          floor: item.floor,
+          link: item.link,
+          placeColor: item.placeColor,
+          width: item.width,
+          height: item.height,
           radius: item.radius ?? undefined,
+          backgroundColor: item.backgroundColor,
+          strokeWidth: item.strokeWidth,
+          fill: item.fill,
+          left: item.left,
+          top: item.top,
+          angle: item.angle,
+          scaleX: item.scaleX,
+          scaleY: item.scaleY,
         });
         break;
 

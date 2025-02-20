@@ -6,6 +6,7 @@ import { InputOtp } from '@heroui/react';
 import { Button } from '@/components/ui';
 import { codeSchema, TCodeSchema } from './schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { FetchError } from '@/services/api/fetch-error';
 
 interface Props {
   title?: string;
@@ -33,7 +34,7 @@ export const CodeForm: React.FC<Props> = ({ title, userId, onChangeTab }) => {
         if (onChangeTab) onChangeTab();
         return 'Аккаунт подтвержден! Входите в систему';
       },
-      error: 'Ошибка!',
+      error: (error: FetchError) => error.message,
     });
   };
 

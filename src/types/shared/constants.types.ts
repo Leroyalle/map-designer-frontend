@@ -3,6 +3,7 @@ export enum NavRoutesEnum {
   AUTH = '/auth',
   PROFILE = '/personal-page',
   PROJECT = '/project',
+  PROJECT_VIEW = '/view',
 }
 
 export enum ApiRoutesEnum {

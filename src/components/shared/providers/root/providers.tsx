@@ -6,6 +6,7 @@ import { ContextProvider } from './context-provider';
 import { Toaster } from '@/components/ui';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import NextTopLoader from 'nextjs-toploader';
 
 interface Props {
   children: ReactNode;
@@ -27,6 +28,7 @@ export const Providers: React.FC<Props> = ({ children }) => {
           <HeroUIProvider>
             {children}
             <Toaster position="bottom-left" />
+            <NextTopLoader color="#2563eb" />
             <ReactQueryDevtools initialIsOpen={false} />
           </HeroUIProvider>
         </ContextProvider>

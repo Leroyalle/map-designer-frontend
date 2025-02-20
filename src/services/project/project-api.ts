@@ -1,4 +1,4 @@
-import { $fetch } from '../fetch-wrapper';
+import { $fetch } from '../api';
 import { ApiRoutesEnum, Project, ProjectResponse, ProjectWithItems, PublishProject } from '@/types';
 
 class ProjectService {

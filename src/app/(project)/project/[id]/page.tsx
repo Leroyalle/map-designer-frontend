@@ -19,10 +19,11 @@ export default async function Project({ params }: { params: Promise<{ id: string
 
     return (
       <Container>
-        <CanvasWrapper data={data.data} isOwner={data.isOwner} />
+        <CanvasWrapper data={data} isOwner={data.isOwner} />
       </Container>
     );
   } catch (error) {
-    console.error(error);
+    console.log('Project server error', error);
+    return notFound();
   }
 }

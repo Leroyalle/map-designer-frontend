@@ -1,20 +1,20 @@
 import React, { useEffect, useRef } from 'react';
 import clsx from 'clsx';
-import { useCanvasEvents, useCanvasInteractions, useInitCanvas } from '@/hooks';
+import { useCanvasEvents, useCanvasInteractions, useInitCanvasEdit } from '@/hooks';
 import { useCanvasSlice } from '@/store';
 import { ProjectWithItems } from '@/types';
 
 interface Props {
-  data: ProjectWithItems;
+  project: ProjectWithItems;
   className?: string;
 }
 
-export const CanvasField: React.FC<Props> = ({ data, className }) => {
+export const CanvasFieldEdit: React.FC<Props> = ({ project, className }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const { canvas, setSelectedObject, setObjects } = useCanvasSlice();
   const { canvasTransform } = useCanvasInteractions(containerRef);
-  useInitCanvas(canvasRef, data);
+  useInitCanvasEdit(canvasRef, project);
   useCanvasEvents(
     canvas,
     (object) => setSelectedObject(object),
