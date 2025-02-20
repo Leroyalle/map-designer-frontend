@@ -1,1 +1,9 @@
-export type ShapeType = 'line' | 'rect' | 'circle' | 'door' | 'window' | 'ladder' | 'elevator';
+export type ShapeType =
+  | 'line'
+  | 'rect'
+  | 'ellipse'
+  | 'door'
+  | 'window'
+  | 'ladder'
+  | 'elevator'
+  | 'image';

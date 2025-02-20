@@ -1,4 +1,4 @@
-import { Image, Point } from 'fabric';
+import { FabricObject, Image, Line } from 'fabric';
 import { ShapeFactory } from './shape-factory';
 import { ShapeType } from '@/types';
 
@@ -8,27 +8,43 @@ const imageSources: Partial<Record<ShapeType, string>> = {
   elevator: '/img/shapes/elevator-shape.png',
 };
 
-export const selectDrawShape = (shapeType: ShapeType, pointer: Point) => {
+export const selectDrawShape = (
+  shapeType: ShapeType,
+  coords: { x: number; y: number },
+  params?: FabricObject | Line | Image,
+) => {
   if (shapeType === 'line') {
-    return ShapeFactory.createLine([pointer.x, pointer.y, pointer.x, pointer.y]);
+    return ShapeFactory.createLine(
+      params
+        ? [params.x1, params.y1, params.x2, params.y2]
+        : [coords.x, coords.y, coords.x, coords.y],
+      params,
+    );
   }
 
   if (shapeType === 'rect') {
-    return ShapeFactory.createRect({ left: pointer.x, top: pointer.y, width: 0, height: 0 });
+    return ShapeFactory.createRect({
+      left: coords.x,
+      top: coords.y,
+      width: 0,
+      height: 0,
+      ...params,
+    });
   }
 
-  if (shapeType === 'circle') {
-    return ShapeFactory.createCircle({ left: pointer.x, top: pointer.y });
+  if (shapeType === 'ellipse') {
+    return ShapeFactory.createCircle({ left: coords.x, top: coords.y, ...params });
   }
-  if (imageSources[shapeType]) {
+  if (imageSources[shapeType] || shapeType === 'image') {
     return new Promise<Image>((resolve) => {
       const image = document.createElement('img');
-      image.src = imageSources[shapeType] as string;
+      image.src = params ? params.src : (imageSources[shapeType] as string);
       image.addEventListener('load', () => {
         resolve(
           ShapeFactory.createImg(image, {
-            left: pointer.x,
-            top: pointer.y,
+            left: coords.x,
+            top: coords.y,
+            ...params,
           }),
         );
       });

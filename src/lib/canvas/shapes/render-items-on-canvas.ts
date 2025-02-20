@@ -14,7 +14,7 @@ export const renderItemsOnCanvas = (canvas: Canvas, items: ProjectItem[]) => {
         });
         break;
 
-      case 'circle':
+      case 'ellipse':
         fabricObject = new Circle({
           ...item,
           radius: item.radius ?? undefined,

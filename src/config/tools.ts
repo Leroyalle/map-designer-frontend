@@ -16,7 +16,7 @@ export const SHAPES: ToolConfig[] = [
     shortcut: 'KeyR',
   },
   {
-    type: 'circle',
+    type: 'ellipse',
     image: '/img/tool-icons/figures/round.svg',
     name: 'Круг',
     shortcut: 'KeyC',

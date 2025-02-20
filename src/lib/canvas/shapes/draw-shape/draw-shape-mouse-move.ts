@@ -14,7 +14,7 @@ export function drawShapeMouseMove(
   const deltaX = pointer.x - startPoint.x;
   const deltaY = pointer.y - startPoint.y;
   switch (shapeType) {
-    case 'circle':
+    case 'ellipse':
       if (activeTool instanceof Ellipse) {
         updateCircle(activeTool, deltaX, deltaY, pointer, isCtrlPressed);
       }

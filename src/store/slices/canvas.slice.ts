@@ -23,9 +23,6 @@ export const useCanvasSlice = create<Store>()((set) => ({
     set((prev) => ({
       objects: [...prev.objects, object],
     })),
-  setSelectedObject: (object) => {
-    console.log(object);
-    set({ selectedObject: object });
-  },
+  setSelectedObject: (object) => set({ selectedObject: object }),
   setSelectedTool: (object) => set({ selectedTool: object }),
 }));
