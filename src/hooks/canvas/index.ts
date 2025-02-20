@@ -3,3 +3,4 @@ export { useCanvasEvents } from './use-canvas-event';
 export { useInitCanvasEdit } from './use-init-canvas-edit';
 export { useCanvasInteractions } from './use-canvas-interactions';
 export { useInitCanvasView } from './use-init-canvas-view';
+export { useScrollToObject } from './use-scroll-to-object';

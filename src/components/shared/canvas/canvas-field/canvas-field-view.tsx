@@ -27,7 +27,7 @@ export const CanvasFieldView: React.FC<Props> = ({ project, className }) => {
 
   return (
     <div className={cn('view-mode', className)}>
-      <PlacesList items={project.items} className="fixed left-0 top-1/2 -translate-y-1/2 z-50" />
+      <PlacesList items={project.items} className="fixed left-2 top-1/2 -translate-y-1/2 z-50" />
       <canvas id="canvas" ref={canvasRef} />
     </div>
   );

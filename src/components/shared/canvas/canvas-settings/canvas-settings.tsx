@@ -2,21 +2,14 @@
 import React, { useEffect, useState } from 'react';
 import { cn } from '@/lib/utils';
 import { useCanvasSlice } from '@/store';
-import { Input, Slider } from '@heroui/react';
-import { useCanvasDimensions } from '@/hooks';
-import { ProjectWithItems } from '@/types';
+import { Slider } from '@heroui/react';
 
 interface Props {
-  data: ProjectWithItems;
   className?: string;
 }
 
-export const CanvasSettings: React.FC<Props> = ({ data, className }) => {
+export const CanvasSettings: React.FC<Props> = ({ className }) => {
   const canvas = useCanvasSlice((state) => state.canvas);
-  const { dimensions, handleDimensionChange } = useCanvasDimensions(
-    data.canvasWidth,
-    data.canvasHeight,
-  );
 
   const [imageOpacity, setImageOpacity] = useState<number | number[]>(100);
 
@@ -38,20 +31,6 @@ export const CanvasSettings: React.FC<Props> = ({ data, className }) => {
   return (
     <div
       className={cn('flex bg-[#262626] text-white p-3 rounded-[10px] flex-col gap-y-3', className)}>
-      <Input
-        label="Ширина"
-        value={dimensions.width.toString()}
-        onChange={handleDimensionChange('width')}
-        type="number"
-        min="1"
-      />
-      <Input
-        label="Высота"
-        value={dimensions.height.toString()}
-        onChange={handleDimensionChange('height')}
-        type="number"
-        min="1"
-      />
       <Slider
         label={'Прозрачность фото'}
         size="sm"
@@ -59,6 +38,7 @@ export const CanvasSettings: React.FC<Props> = ({ data, className }) => {
         step={1}
         defaultValue={imageOpacity}
         value={imageOpacity}
+        hideValue
         onChange={(value) => setImageOpacity(value)}
       />
     </div>

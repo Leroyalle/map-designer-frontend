@@ -1,7 +1,7 @@
 'use client';
 import { cn } from '@/lib';
-import React from 'react';
-import { PlaceItem } from './components';
+import React, { useState } from 'react';
+import { PlaceItem, PlaceDrawer } from './components';
 import { FilteredInput } from '@/components/ui';
 import { ProjectItem } from '@/types';
 
@@ -11,12 +11,19 @@ interface Props {
 }
 
 export const PlacesList: React.FC<Props> = ({ items, className }) => {
-  const [searchValue, setSearchValue] = React.useState('');
+  const [searchValue, setSearchValue] = useState('');
+  const [selectedPlace, setSelectedPlace] = useState<ProjectItem | null>(null);
+  const [isOpenDrawer, setIsOpenDrawer] = useState(false);
 
   const filteredItems = items.filter((item) =>
     item.name.toLowerCase().includes(searchValue.toLowerCase()),
   );
-  console.log(items);
+
+  const onClickItem = (item: ProjectItem) => {
+    setIsOpenDrawer(true);
+    setSelectedPlace(item);
+  };
+
   const clearInput = () => setSearchValue('');
   return (
     <div
@@ -31,11 +38,15 @@ export const PlacesList: React.FC<Props> = ({ items, className }) => {
         onClear={clearInput}
       />
 
-      <hr className=" border-[#E9ECEE] border-1" />
-
-      <div className="m-5">
+      <hr className="border-[#E9ECEE] border-1" />
+      <PlaceDrawer
+        isOpen={isOpenDrawer && selectedPlace !== null}
+        placeData={selectedPlace!}
+        onOpenChange={() => setIsOpenDrawer(!isOpenDrawer)}
+      />
+      <div className="p-5">
         {filteredItems.map((item, id) => (
-          <div key={id} className="mb-5">
+          <div key={id} className="mb-5" onClick={() => onClickItem(item)}>
             {id > 0 && <hr className="border-[#E9ECEE] border-1 mb-5" />}
 
             <PlaceItem color={item.placeColor} title={item.name} floor={item.floor} />

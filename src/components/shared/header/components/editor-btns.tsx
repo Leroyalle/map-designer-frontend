@@ -2,8 +2,9 @@ import { Button, Typography } from '@/components/ui';
 import { usePublishProject } from '@/hooks/project';
 import { getSingleId, isCircle } from '@/lib';
 import { useCanvasSlice } from '@/store';
-import { CanvasProjectItem } from '@/types';
+import { CanvasProjectItem, NavRoutesEnum } from '@/types';
 import { Eye } from 'lucide-react';
+import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import React from 'react';
 
@@ -20,7 +21,7 @@ export const EditorBtns: React.FC = () => {
     if (!canvas || !projectId) return;
     const canvasWidth = canvas.getWidth();
     const canvasHeight = canvas.getHeight();
-    const objects: CanvasProjectItem[] = canvas
+    const items: CanvasProjectItem[] = canvas
       .getObjects()
       .filter((obj) => obj.name !== 'background')
       .map((obj) => ({
@@ -44,7 +45,8 @@ export const EditorBtns: React.FC = () => {
         scaleX: obj.scaleX,
         scaleY: obj.scaleY,
       }));
-    publishProject({ id: getSingleId(projectId), canvasWidth, canvasHeight, items: objects });
+    console.log(items);
+    publishProject({ id: getSingleId(projectId), canvasWidth, canvasHeight, items });
   };
 
   return (
@@ -53,9 +55,11 @@ export const EditorBtns: React.FC = () => {
         <Button>Редактор</Button>
       ) : (
         <>
-          <Button variant="ghost">
-            <Eye />
-            <Typography>Предпросмотр</Typography>
+          <Button variant="ghost" asChild>
+            <Link href={`${NavRoutesEnum.PROJECT}/${projectId}${NavRoutesEnum.PROJECT_VIEW}`}>
+              <Eye />
+              <Typography>Предпросмотр</Typography>
+            </Link>
           </Button>
           <Button onClick={handlePublish}>Опубликовать</Button>
         </>
