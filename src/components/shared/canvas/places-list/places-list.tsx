@@ -1,52 +1,34 @@
 'use client';
 import { cn } from '@/lib';
-import React from 'react';
-import { PlaceItem } from './components';
+import React, { useState } from 'react';
+import { PlaceItem, PlaceDrawer } from './components';
 import { FilteredInput } from '@/components/ui';
+import { ProjectItem } from '@/types';
 
 interface Props {
+  items: ProjectItem[];
   className?: string;
 }
-const mapItems = [
-  {
-    title: 'Арт-маркет',
-    floor: 1,
-    color: '#8596BD',
-  },
-  {
-    title: 'Большой лекторий',
-    floor: -1,
-    color: '#FFBA00',
-  },
-  {
-    title: 'Зона полезной программы',
-    floor: 3,
-    color: '#FE70AF',
-  },
-  {
-    title: 'Гардеробная',
-    floor: 2,
-    color: '#48BE38',
-  },
-  {
-    title: 'Аквариум',
-    floor: 1,
-    color: '#77DDE7',
-  },
-];
 
-export const PlacesList: React.FC<Props> = ({ className }) => {
-  const [searchValue, setSearchValue] = React.useState('');
+export const PlacesList: React.FC<Props> = ({ items, className }) => {
+  const [searchValue, setSearchValue] = useState('');
+  const [selectedPlace, setSelectedPlace] = useState<ProjectItem | null>(null);
+  const [isOpenDrawer, setIsOpenDrawer] = useState(false);
 
-  const filteredItems = mapItems.filter((item) =>
-    item.title.toLowerCase().includes(searchValue.toLowerCase()),
+  const filteredItems = items.filter((item) =>
+    item.name.toLowerCase().includes(searchValue.toLowerCase()),
   );
+
+  const onClickItem = (item: ProjectItem) => {
+    setIsOpenDrawer(true);
+    setSelectedPlace(item);
+  };
 
   const clearInput = () => setSearchValue('');
   return (
     <div
       className={cn(
-        'max-w-[364px]  bg-background overflow-auto max-h-screen rounded-[10px] shadow-md flex flex-col scrollbar',
+        'max-w-[364px] bg-background overflow-auto rounded-[10px] shadow-md flex flex-col scrollbar',
         className,
       )}>
       <FilteredInput
@@ -56,14 +38,18 @@ export const PlacesList: React.FC<Props> = ({ className }) => {
         onClear={clearInput}
       />
 
-      <hr className=" border-[#E9ECEE] border-1" />
-
-      <div className="m-5">
+      <hr className="border-[#E9ECEE] border-1" />
+      <PlaceDrawer
+        isOpen={isOpenDrawer && selectedPlace !== null}
+        placeData={selectedPlace!}
+        onOpenChange={() => setIsOpenDrawer(!isOpenDrawer)}
+      />
+      <div className="p-5">
         {filteredItems.map((item, id) => (
-          <div key={id} className="mb-5">
+          <div key={id} className="mb-5" onClick={() => onClickItem(item)}>
             {id > 0 && <hr className="border-[#E9ECEE] border-1 mb-5" />}
 
-            <PlaceItem color={item.color} title={item.title} floor={item.floor} />
+            <PlaceItem color={item.placeColor} title={item.name} floor={item.floor} />
           </div>
         ))}
       </div>

@@ -11,6 +11,7 @@ declare module 'fabric' {
     floor: number;
     link: string;
     imageUrl: string;
+    placeColor: string;
     zIndex: number;
   }
 }

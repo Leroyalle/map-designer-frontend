@@ -1,5 +1,5 @@
 import { ApiRoutesEnum, LoginType, RegisterType, AuthResponse, VerifyUserType } from '@/types';
-import { $fetch } from '../fetch-wrapper';
+import { $fetch } from '../api';
 
 class AuthService {
   public async register(body: RegisterType, isAuth: boolean = false) {

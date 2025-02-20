@@ -24,11 +24,11 @@ export const DialogMainBlock: React.FC<Props> = ({ onClose }) => {
     },
   });
 
-  const onSubmit = async (data: TCreateProjectSchema) => {
+  const onSubmit = (data: TCreateProjectSchema) => {
     const formData = new FormData();
     formData.append('name', data.name);
     if (selectedFile) formData.append('image', selectedFile);
-    await createProject(formData);
+    createProject(formData);
     onClose();
   };
 

@@ -8,6 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { FormInput } from '../../form-input';
 import { toast } from 'sonner';
 import { authService } from '@/services';
+import { FetchError } from '@/services/api/fetch-error';
 
 interface Props {
   onSuccess?: (userId: string) => void;
@@ -40,7 +41,7 @@ export const Register: React.FC<Props> = ({ onSuccess, onChangeAction, className
         if (onChangeAction) onChangeAction();
         return 'Письмо с кодом отправлено на почту';
       },
-      error: 'Ошибка! Повторите попытку',
+      error: (error: FetchError) => error.message,
     });
   };
 

@@ -5,3 +5,6 @@ export { useInitCanvas } from './use-init-canvas';
 export { useKeyboardEvents } from './use-keyboard-events';
 export { useFabricEvents } from './use-fabric-events';
 export { useMouseEvents } from './use-mouse-events';
+export { useInitCanvasEdit } from './use-init-canvas-edit';
+export { useInitCanvasView } from './use-init-canvas-view';
+export { useScrollToObject } from './use-scroll-to-object';

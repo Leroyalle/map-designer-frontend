@@ -34,6 +34,7 @@ export type ProjectItem = {
   time: string;
   floor: number;
   link: string;
+  placeColor: string;
 
   width: number;
   height: number;
@@ -71,6 +72,7 @@ export type CanvasProjectItem = {
   time: string;
   floor: number;
   link: string;
+  placeColor: string;
 
   width: number;
   height: number;
