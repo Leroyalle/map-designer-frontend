@@ -14,17 +14,9 @@ export const CanvasFieldEdit: React.FC<Props> = ({ project, className }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { canvas, setSelectedObject } = useCanvasSlice();
   const { canvasTransform } = useCanvasInteractions(containerRef);
-<<<<<<< HEAD:src/components/shared/canvas/canvas-field.tsx
-  useInitCanvas(canvasRef, data);
   useCanvasEvents(canvas, (object) => setSelectedObject(object));
-=======
   useInitCanvasEdit(canvasRef, project);
-  useCanvasEvents(
-    canvas,
-    (object) => setSelectedObject(object),
-    (objects) => setObjects(objects),
-  );
->>>>>>> origin/features/free-line:src/components/shared/canvas/canvas-field/canvas-field-edit.tsx
+  useCanvasEvents(canvas, (object) => setSelectedObject(object));
 
   useEffect(() => {
     if (containerRef.current) {

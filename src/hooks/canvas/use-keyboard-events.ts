@@ -1,5 +1,5 @@
 'use client';
-import { copyTextToClipboard, pasteTextFromClipboard, selectDrawShape } from '@/lib';
+import { handleCopy, handleDelete, handlePaste } from '@/lib';
 import { Canvas } from 'fabric';
 import { RefObject, useEffect, useRef, useState } from 'react';
 
@@ -18,64 +18,15 @@ export const useKeyboardEvents = (
         setIsCtrlPressed(true);
       }
       if (e.code === 'Delete') {
-        canvas.getActiveObjects().forEach((obj) => {
-          canvas.remove(obj);
-        });
-        canvas.discardActiveObject();
-        canvas.requestRenderAll();
+        handleDelete(canvas);
       }
 
       if (e.code === 'KeyC' && isCtrlPressed && canvas) {
-        offset.current = 10;
-        const activeObjects = canvas.getActiveObjects();
-        console.log(activeObjects[0]);
-        if (activeObjects.length > 0) {
-          const jsonString = JSON.stringify(
-            activeObjects.map((obj) => {
-              const { left, top } = obj.getBoundingRect();
-              return {
-                ...obj.toObject(),
-                left,
-                top,
-              };
-            }),
-          );
-          copyTextToClipboard(jsonString);
-        }
+        handleCopy(canvas, offset);
       }
 
       if (e.code === 'KeyV' && isCtrlPressed && canvas) {
-        (async () => {
-          const clipboardText = await pasteTextFromClipboard();
-          const parsedObjects = JSON.parse(clipboardText);
-          for (const obj of parsedObjects) {
-            const centerLeft =
-              (obj.type === 'Image'
-                ? (obj.width * obj.scaleX) / 2
-                : obj.strokeWidth / 2 + obj.width / 2) + obj.left;
-            const centerTop =
-              (obj.type === 'Image'
-                ? (obj.height * obj.scaleY) / 2
-                : obj.strokeWidth / 2 + obj.height / 2) + obj.top;
-
-            obj.left = centerLeft + offset.current;
-            obj.top = centerTop + offset.current;
-
-            const fabricObject = await selectDrawShape(
-              obj.type.toLowerCase(),
-              {
-                x: centerLeft,
-                y: centerTop,
-              },
-              obj,
-            );
-
-            if (fabricObject) {
-              canvas.add(fabricObject);
-            }
-          }
-          offset.current += 10;
-        })();
+        handlePaste(canvas, offset);
       }
     };
 

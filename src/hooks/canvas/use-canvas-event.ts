@@ -17,12 +17,8 @@ type FabricEvent = Partial<TEvent<TPointerEvent>> & {
 export const useCanvasEvents = (
   canvas: FabricCanvas | null,
   setSelectedObject: (object: FabricObject | null) => void,
-<<<<<<< HEAD
-=======
-  clearObjectSettings: () => void,
-  setObjects: (objects: FabricObject[]) => void,
+
   isViewMode?: boolean,
->>>>>>> origin/features/free-line
 ) => {
   const isSpacePressed = useRef(false);
   const lastPoint = useRef<Point | null>(null);
@@ -100,9 +96,5 @@ export const useCanvasEvents = (
         canvas.off('selection:cleared', handleSelectionCleared);
       }
     };
-<<<<<<< HEAD
   }, [canvas, setSelectedObject]);
-=======
-  }, [canvas, setSelectedObject, clearObjectSettings]);
->>>>>>> origin/features/free-line
 };
