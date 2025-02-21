@@ -7,6 +7,12 @@ export type ToolConfig = {
   shortcut?: string;
   options?: object;
 };
+export const imageSources: Record<string, string> = {
+  door: '/img/shapes/door-shape.png',
+  ladder: '/img/shapes/ladder-shape.png',
+  elevator: '/img/shapes/elevator-shape.png',
+  window: '/img/shapes/door-shape.png',
+};
 
 export const SHAPES: ToolConfig[] = [
   {

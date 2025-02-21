@@ -14,8 +14,9 @@ export async function drawShapeFirstPoint(
   const pointer = canvas.getPointer(elem.e);
   canvas.selection = false;
 
-  const shape = await selectDrawShape(shapeType, pointer);
+  const shape = await selectDrawShape(shapeType, pointer, canvas);
   if (shape) {
+    console.log('shape', shape);
     canvas.add(shape);
     activeToolRef.current = shape;
     startPoint.current = pointer;

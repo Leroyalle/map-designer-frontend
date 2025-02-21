@@ -7,16 +7,6 @@ interface Props {
   className?: string;
 }
 
-// const buildTools = [
-//   { image: '/img/tool-icons/build-elements/door.svg', name: 'Двери' },
-//   { image: '/img/tool-icons/build-elements/window.svg', name: 'Окна' },
-// ];
-
-// const facilitiesTools = [
-//   { image: '/img/tool-icons/build-elements/facilities/stairs.svg', name: 'Лестница' },
-//   { image: '/img/tool-icons/build-elements/facilities/elevator.svg', name: 'Лифт' },
-// ];
-
 const controlTools = [
   { toolImage: '/img/tool-icons/helpers/chevron.svg' },
   { toolImage: '/img/tool-icons/helpers/hand.svg' },

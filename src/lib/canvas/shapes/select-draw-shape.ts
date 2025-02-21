@@ -1,12 +1,9 @@
-import { FabricObject, Image } from 'fabric';
+import { Canvas, FabricObject } from 'fabric';
 import { ShapeFactory } from './shape-factory';
 import { ShapeType } from '@/types';
-
-const imageSources: Partial<Record<ShapeType, string>> = {
-  door: '/img/shapes/door-shape.png',
-  ladder: '/img/shapes/ladder-shape.png',
-  elevator: '/img/shapes/elevator-shape.png',
-};
+import { imageSources } from '@/config';
+import { generateFrameName } from './generate-frame-name';
+import { getRandomColor } from '@/lib';
 
 interface Params extends FabricObject {
   x1: number;
@@ -18,12 +15,21 @@ interface Params extends FabricObject {
 export const selectDrawShape = (
   shapeType: ShapeType,
   coords: { x: number; y: number },
+  canvas: Canvas,
   params?: Params,
 ) => {
+  const name = generateFrameName(canvas);
+  const placeColor = getRandomColor();
   if (shapeType === 'line') {
-    const lineParams = params
-      ? { ...params, x1: coords.x, y1: coords.y, x2: coords.x, y2: coords.y }
-      : {};
+    const lineParams = {
+      ...params,
+      x1: coords.x,
+      y1: coords.y,
+      x2: coords.x,
+      y2: coords.y,
+      name,
+      placeColor,
+    };
     return ShapeFactory.createLine(
       params
         ? [params.x1, params.y1, params.x2, params.y2]
@@ -38,26 +44,29 @@ export const selectDrawShape = (
       top: coords.y,
       width: 0,
       height: 0,
+      name,
+      placeColor,
       ...params,
     });
   }
 
   if (shapeType === 'ellipse') {
-    return ShapeFactory.createCircle({ left: coords.x, top: coords.y, ...params });
+    return ShapeFactory.createCircle({
+      left: coords.x,
+      top: coords.y,
+      name,
+      placeColor,
+      ...params,
+    });
   }
   if (imageSources[shapeType] || (shapeType === 'image' && params?.src)) {
-    return new Promise<Image>((resolve) => {
-      const image = document.createElement('img');
-      image.src = params ? params.src : (imageSources[shapeType] as string);
-      image.addEventListener('load', () => {
-        resolve(
-          ShapeFactory.createImg(image, {
-            left: coords.x,
-            top: coords.y,
-            ...params,
-          }),
-        );
-      });
+    const image = params ? params.src : (imageSources[shapeType] as string);
+    return ShapeFactory.createImg(image, {
+      left: coords.x,
+      top: coords.y,
+      name,
+      placeColor,
+      ...params,
     });
   }
 };

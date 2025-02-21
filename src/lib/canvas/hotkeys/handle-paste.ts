@@ -23,6 +23,7 @@ export const handlePaste = async (canvas: Canvas, offset: RefObject<number>) => 
         x: centerLeft,
         y: centerTop,
       },
+      canvas,
       obj,
     );
 

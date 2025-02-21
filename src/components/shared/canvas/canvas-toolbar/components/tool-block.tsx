@@ -12,10 +12,9 @@ interface Props {
 }
 
 export const ToolBlock: React.FC<Props> = ({ title, tools, className }) => {
-  const { selectedTool, canvas, setSelectedTool } = useCanvasSlice((state) => state);
+  const { selectedTool, setSelectedTool } = useCanvasSlice((state) => state);
 
   const handleToolClick = (tool: ToolConfig) => {
-    if (!canvas) return;
     setSelectedTool(tool);
   };
 
