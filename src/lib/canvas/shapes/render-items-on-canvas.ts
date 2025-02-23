@@ -58,12 +58,6 @@ export const renderItemsOnCanvas = (canvas: Canvas, items: ProjectItem[]) => {
         });
         break;
 
-      // case 'text':
-      //   fabricObject = new fabric.Text(item.text, {
-      //     ...item,
-      //   });
-      //   break;
-
       default:
         console.warn(`Неизвестный тип объекта: ${item.type}`);
         return;

@@ -2,7 +2,6 @@ import { $fetch } from '../api';
 import { ApiRoutesEnum, Project, ProjectResponse, ProjectWithItems, PublishProject } from '@/types';
 
 class ProjectService {
-  // TODO: add generic
   async create(body: FormData) {
     return $fetch.post<Project[]>(ApiRoutesEnum.PROJECT, body, true);
   }
