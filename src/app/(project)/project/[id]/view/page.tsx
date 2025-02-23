@@ -18,7 +18,7 @@ export default async function ProjectView({ params }: { params: Promise<{ id: st
 
     return <CanvasWrapper isWatchMode data={data} isOwner={data.isOwner} />;
   } catch (error) {
-    console.log('Project view server error', error);
+    console.error('Project view server error', error);
     return notFound();
   }
 }

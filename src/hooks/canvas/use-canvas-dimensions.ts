@@ -11,7 +11,6 @@ export const useCanvasDimensions = (canvasWidth: number, canvasHeight: number) =
     (type: 'width' | 'height') => (e: React.ChangeEvent<HTMLInputElement>) => {
       const value = e.target.value.replace(/\D/g, '');
       const intValue = Math.min(Math.max(1, parseInt(value, 10) || 0), 2500);
-      console.log(type, intValue);
       setDimensions((prev) => ({ ...prev, [type]: intValue }));
     },
     [],
