@@ -17,7 +17,7 @@ type FabricEvent = Partial<TEvent<TPointerEvent>> & {
 export const useCanvasEvents = (
   canvas: FabricCanvas | null,
   setSelectedObject: (object: FabricObject | null) => void,
-  clearObjectSettings: () => void,
+
   isViewMode?: boolean,
 ) => {
   const isSpacePressed = useRef(false);
@@ -26,7 +26,6 @@ export const useCanvasEvents = (
 
   useEffect(() => {
     if (!canvas) return;
-
     const handleSelectionCreated = (event: FabricEvent) => {
       setSelectedObject(event.selected[0]);
     };
@@ -37,7 +36,6 @@ export const useCanvasEvents = (
 
     const handleSelectionCleared = () => {
       setSelectedObject(null);
-      clearObjectSettings();
     };
 
     const handleMouseWheel = (event: TPointerEventInfo<WheelEvent>) => {
@@ -98,5 +96,5 @@ export const useCanvasEvents = (
         canvas.off('selection:cleared', handleSelectionCleared);
       }
     };
-  }, [canvas, setSelectedObject, clearObjectSettings, isViewMode]);
+  }, [canvas, setSelectedObject]);
 };

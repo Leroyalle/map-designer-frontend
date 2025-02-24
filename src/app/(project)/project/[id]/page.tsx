@@ -23,7 +23,7 @@ export default async function Project({ params }: { params: Promise<{ id: string
       </Container>
     );
   } catch (error) {
-    console.log('Project server error', error);
+    console.error('Project server error', error);
     return notFound();
   }
 }

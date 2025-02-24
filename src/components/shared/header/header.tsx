@@ -27,7 +27,7 @@ export const Header: React.FC<Props> = ({ isEditMode = false, className }) => {
       )}>
       <Link href={NavRoutesEnum.PROFILE}>Project name</Link>
       <Typography className="text-[#878787] select-none">Version 0.1</Typography>
-      {isEditMode ? <EditorBtns /> : <ProfileBtn email={me.email} avatar={undefined} />}
+      {isEditMode ? <EditorBtns /> : <ProfileBtn email={'big_duck_bus_🪅'} avatar={undefined} />}
     </header>
   );
 };

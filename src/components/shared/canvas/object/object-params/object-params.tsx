@@ -42,13 +42,11 @@ export const ObjectParams: React.FC<Props> = ({ className }) => {
       form.setValue('floor', selectedObject.get('floor') || undefined);
       form.setValue('link', selectedObject.get('link') || '');
     }
-    console.log('SELECTED:', selectedObject);
   }, [selectedObject]);
 
   const errorMap = form.formState.errors.mapType;
 
   const onSubmit = (data: TMapDescSchema) => {
-    console.log(data);
     selectedObject?.set({ ...data });
     toast.success(`Объект ${data.name} сохранен`);
   };

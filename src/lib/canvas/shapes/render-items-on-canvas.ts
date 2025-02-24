@@ -5,7 +5,6 @@ export const renderItemsOnCanvas = (canvas: Canvas, items: ProjectItem[]) => {
   if (!items || !Array.isArray(items)) return;
 
   items.forEach((item) => {
-    console.log('items:', items);
     let fabricObject;
 
     switch (item.type) {
@@ -33,8 +32,7 @@ export const renderItemsOnCanvas = (canvas: Canvas, items: ProjectItem[]) => {
         });
         break;
 
-      case 'circle':
-        console.log('CREATE CIRCLE');
+      case 'ellipse':
         fabricObject = new Circle({
           canvasId: item.canvasId,
           name: item.name,

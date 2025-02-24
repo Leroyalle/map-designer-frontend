@@ -14,16 +14,9 @@ export const CanvasFieldView: React.FC<Props> = ({ project, className }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const { canvas, setSelectedObject } = useCanvasSlice();
   useInitCanvasView(canvasRef, project);
-  useCanvasEvents(
-    canvas,
-    (object) => {
-      setSelectedObject(object);
-    },
-    () => {
-      setSelectedObject(null);
-    },
-    true,
-  );
+  useCanvasEvents(canvas, (object) => {
+    setSelectedObject(object);
+  });
 
   return (
     <div className={cn('view-mode', className)}>

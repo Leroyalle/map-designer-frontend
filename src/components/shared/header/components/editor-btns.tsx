@@ -13,8 +13,6 @@ export const EditorBtns: React.FC = () => {
   const { canvas } = useCanvasSlice();
   const { id: projectId } = useParams();
 
-  console.log(projectId);
-
   const { publishProject } = usePublishProject();
 
   const handlePublish = () => {
@@ -45,7 +43,6 @@ export const EditorBtns: React.FC = () => {
         scaleX: obj.scaleX,
         scaleY: obj.scaleY,
       }));
-    console.log(items);
     publishProject({ id: getSingleId(projectId), canvasWidth, canvasHeight, items });
   };
 

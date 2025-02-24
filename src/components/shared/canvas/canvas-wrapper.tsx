@@ -23,7 +23,6 @@ export const CanvasWrapper: React.FC<Props> = ({ isWatchMode, data, isOwner, cla
     refetchOnWindowFocus: false,
     staleTime: 1 * 60 * 1000,
   });
-  console.log('isOwner', isOwner);
 
   if (isLoading) {
     return <Spinner className="absolute bottom-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />;

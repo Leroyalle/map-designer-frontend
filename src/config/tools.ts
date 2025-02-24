@@ -1,44 +1,66 @@
-import { Canvas } from 'fabric';
-import { ShapeFactory } from '../lib/canvas/shapes/shape-factory';
-import { generateFrameName, getRandomColor } from '@/lib';
+import { ShapeType } from '@/types';
 
 export type ToolConfig = {
-  id: string;
+  type: ShapeType;
   image: string;
   name: string;
-  createHandler: (canvas: Canvas) => void;
   shortcut?: string;
   options?: object;
 };
+export const imageSources: Record<string, string> = {
+  door: '/img/shapes/door-shape.png',
+  ladder: '/img/shapes/ladder-shape.png',
+  elevator: '/img/shapes/elevator-shape.png',
+  window: '/img/shapes/door-shape.png',
+};
 
-export const SHAPE_TOOLS: ToolConfig[] = [
+export const SHAPES: ToolConfig[] = [
   {
-    id: 'rectangle',
+    type: 'rect',
     image: '/img/tool-icons/figures/rectangle.svg',
     name: 'Прямоугольник',
-    createHandler: (canvas) => {
-      ShapeFactory.createRect(canvas, {
-        width: 100,
-        height: 100,
-        fill: '#FF3D00',
-        name: generateFrameName(canvas),
-        placeColor: getRandomColor(),
-      });
-    },
     shortcut: 'KeyR',
   },
   {
-    id: 'circle',
+    type: 'ellipse',
     image: '/img/tool-icons/figures/round.svg',
     name: 'Круг',
-    createHandler: (canvas) => {
-      ShapeFactory.createCircle(canvas, {
-        radius: 50,
-        fill: '#FF3D00',
-        name: generateFrameName(canvas),
-        placeColor: getRandomColor(),
-      });
-    },
+    shortcut: 'KeyC',
+  },
+  {
+    type: 'line',
+    image: '/img/tool-icons/figures/free-figure.svg',
+    name: 'Произвольная фигура',
+    shortcut: 'KeyL',
+  },
+];
+
+export const META_SHAPES: ToolConfig[] = [
+  {
+    type: 'door',
+    image: '/img/tool-icons/build-elements/door.svg',
+    name: 'Двери',
+    shortcut: 'KeyR',
+  },
+  {
+    type: 'window',
+    image: '/img/tool-icons/build-elements/window.svg',
+    name: 'Окна',
+    shortcut: 'KeyC',
+  },
+];
+
+export const FACILITIES: ToolConfig[] = [
+  {
+    type: 'ladder',
+    image: '/img/tool-icons/build-elements/facilities/stairs.svg',
+    name: 'Лестница',
+    shortcut: 'KeyR',
+  },
+  {
+    type: 'elevator',
+    image: '/img/tool-icons/build-elements/facilities/elevator.svg',
+    name: 'Лифт',
     shortcut: 'KeyC',
   },
 ];
