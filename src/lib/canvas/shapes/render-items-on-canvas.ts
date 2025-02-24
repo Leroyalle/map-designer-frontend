@@ -1,5 +1,5 @@
 import { ProjectItem } from '@/types';
-import { Canvas, Circle, Ellipse, FabricImage, Rect } from 'fabric';
+import { Canvas, Ellipse, FabricImage, Rect } from 'fabric';
 
 export const renderItemsOnCanvas = (canvas: Canvas, items: ProjectItem[]) => {
   if (!items || !Array.isArray(items)) return;
@@ -25,6 +25,8 @@ export const renderItemsOnCanvas = (canvas: Canvas, items: ProjectItem[]) => {
           fill: item.fill,
           left: item.left,
           top: item.top,
+          originX: item.originX,
+          originY: item.originY,
           angle: item.angle,
           scaleX: item.scaleX,
           scaleY: item.scaleY,
@@ -34,7 +36,8 @@ export const renderItemsOnCanvas = (canvas: Canvas, items: ProjectItem[]) => {
       case 'ellipse':
         fabricObject = new Ellipse({
           canvasId: item.canvasId,
-
+          originX: item.originX,
+          originY: item.originY,
           name: item.name,
           desc: item.desc,
           shortDesc: item.shortDesc,
@@ -64,6 +67,8 @@ export const renderItemsOnCanvas = (canvas: Canvas, items: ProjectItem[]) => {
               img.set({
                 canvasId: item.canvasId,
                 name: item.name,
+                originX: item.originX,
+                originY: item.originY,
                 desc: item.desc,
                 shortDesc: item.shortDesc,
                 time: item.time,

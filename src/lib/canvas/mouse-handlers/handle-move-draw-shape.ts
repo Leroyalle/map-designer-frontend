@@ -15,7 +15,13 @@ export const handleMoveDrawShape = (
   } | null>,
   activeButtonPressed: RefObject<string | null>,
 ) => {
-  if (!activeToolRef.current || !startPoint.current || !selectedTool) return;
+  if (
+    !activeToolRef.current ||
+    !startPoint.current ||
+    !selectedTool ||
+    activeButtonPressed.current === 'Space'
+  )
+    return;
   const pointer = canvas.getPointer(e.e);
   lastPosition.current = pointer;
 

@@ -1,3 +1,4 @@
+import { TOriginX, TOriginY } from 'fabric';
 import { User } from '../user';
 
 export type ProjectResponse<T = void> = {
@@ -35,7 +36,8 @@ export type ProjectItem = {
   floor: number;
   link: string;
   placeColor: string;
-
+  originX: TOriginX;
+  originY: TOriginY;
   width: number;
   height: number;
   imageUrl: string | null;
@@ -74,7 +76,8 @@ export type CanvasProjectItem = {
   floor: number;
   link: string;
   placeColor: string;
-
+  originX: TOriginX;
+  originY: TOriginY;
   width: number;
   height: number;
   imageUrl: string | null;

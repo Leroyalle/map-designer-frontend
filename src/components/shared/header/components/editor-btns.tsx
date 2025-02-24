@@ -37,6 +37,8 @@ export const EditorBtns: React.FC = () => {
         placeColor: obj.placeColor,
         width: obj.width,
         height: obj.height,
+        originX: obj.originX,
+        originY: obj.originY,
         imageUrl: obj?._element?.currentSrc ?? null,
         radius: isCircle(obj) ? obj.radius : null,
         fill: obj.fill?.toString(),
