@@ -1,5 +1,5 @@
 import { ProjectItem } from '@/types';
-import { Canvas, Rect, Circle } from 'fabric';
+import { Canvas, Circle, Ellipse, FabricImage, Rect } from 'fabric';
 
 export const renderItemsOnCanvas = (canvas: Canvas, items: ProjectItem[]) => {
   if (!items || !Array.isArray(items)) return;
@@ -20,8 +20,7 @@ export const renderItemsOnCanvas = (canvas: Canvas, items: ProjectItem[]) => {
           placeColor: item.placeColor,
           width: item.width,
           height: item.height,
-          radius: item.radius ?? undefined,
-          backgroundColor: item.backgroundColor,
+          stroke: item.stroke,
           strokeWidth: item.strokeWidth,
           fill: item.fill,
           left: item.left,
@@ -33,8 +32,9 @@ export const renderItemsOnCanvas = (canvas: Canvas, items: ProjectItem[]) => {
         break;
 
       case 'ellipse':
-        fabricObject = new Circle({
+        fabricObject = new Ellipse({
           canvasId: item.canvasId,
+
           name: item.name,
           desc: item.desc,
           shortDesc: item.shortDesc,
@@ -43,9 +43,10 @@ export const renderItemsOnCanvas = (canvas: Canvas, items: ProjectItem[]) => {
           link: item.link,
           placeColor: item.placeColor,
           width: item.width,
+          rx: item.width ? item.width / 2 : 50,
+          ry: item.height ? item.height / 2 : 30,
           height: item.height,
-          radius: item.radius ?? undefined,
-          backgroundColor: item.backgroundColor,
+          stroke: item.stroke,
           strokeWidth: item.strokeWidth,
           fill: item.fill,
           left: item.left,
@@ -56,12 +57,45 @@ export const renderItemsOnCanvas = (canvas: Canvas, items: ProjectItem[]) => {
         });
         break;
 
-      default:
-        console.warn(`Неизвестный тип объекта: ${item.type}`);
+      case 'image':
+        if (item.imageUrl) {
+          FabricImage.fromURL(item.imageUrl, { crossOrigin: 'anonymous' })
+            .then((img) => {
+              img.set({
+                canvasId: item.canvasId,
+                name: item.name,
+                desc: item.desc,
+                shortDesc: item.shortDesc,
+                time: item.time,
+                floor: item.floor,
+                link: item.link,
+                placeColor: item.placeColor,
+                width: item.width,
+                height: item.height,
+                stroke: item.stroke,
+                strokeWidth: item.strokeWidth,
+                fill: item.fill,
+                left: item.left,
+                top: item.top,
+                angle: item.angle,
+                scaleX: item.scaleX,
+                scaleY: item.scaleY,
+              });
+
+              canvas.add(img);
+              canvas.renderAll();
+            })
+            .catch((error) => {
+              console.error('Ошибка загрузки изображения:', error);
+            });
+        }
         return;
     }
 
-    canvas.add(fabricObject);
+    if (fabricObject) {
+      console.log('fabricObject', fabricObject, fabricObject.type);
+      canvas.add(fabricObject);
+    }
   });
 
   canvas.renderAll();

@@ -38,10 +38,11 @@ export type ProjectItem = {
 
   width: number;
   height: number;
-
+  imageUrl: string | null;
   radius: number | null;
   backgroundColor: string;
   strokeWidth: number;
+  stroke: string;
   fill: string;
   type: string;
   left: number;
@@ -76,8 +77,10 @@ export type CanvasProjectItem = {
 
   width: number;
   height: number;
+  imageUrl: string | null;
   radius: number | null;
   fill?: string;
+  stroke: string;
   strokeWidth: number;
   type: string;
   left: number;

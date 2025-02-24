@@ -36,7 +36,7 @@ export const useScrollToObject = (
         const centerY = canvas.getHeight() / 2;
 
         const newE = centerX - newA * objX;
-        const newF = centerY - newD * objY - 150;
+        const newF = centerY - newD * objY;
 
         vpt[0] = newA;
         vpt[3] = newD;

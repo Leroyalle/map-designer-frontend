@@ -27,6 +27,7 @@ export const CanvasWrapper: React.FC<Props> = ({ isWatchMode, data, isOwner, cla
   if (isLoading) {
     return <Spinner className="absolute bottom-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />;
   }
+  console.log('PROJECT_WITH_ITEMS', project);
 
   return (
     <div className={cn('select-none', className)}>

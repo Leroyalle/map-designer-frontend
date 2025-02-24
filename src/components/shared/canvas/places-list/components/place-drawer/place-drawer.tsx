@@ -45,7 +45,7 @@ export const PlaceDrawer: React.FC<Props> = ({ isOpen, placeData, onOpenChange }
       <DrawerContent>
         {() => (
           <>
-            <DrawerHeader className="flex flex-col gap-1">Custom Motion Drawer</DrawerHeader>
+            <DrawerHeader className="flex flex-col gap-1">{placeData.name}</DrawerHeader>
             <DrawerBody>
               <PlaceDrawerBody
                 shortDesc={placeData.shortDesc}

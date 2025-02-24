@@ -19,6 +19,10 @@ export const EditorBtns: React.FC = () => {
     if (!canvas || !projectId) return;
     const canvasWidth = canvas.getWidth();
     const canvasHeight = canvas.getHeight();
+    console.log(
+      'ITEMS BEFORE PUSH',
+      canvas.getObjects().filter((e) => e.name !== 'background'),
+    );
     const items: CanvasProjectItem[] = canvas
       .getObjects()
       .filter((obj) => obj.name !== 'background')
@@ -33,9 +37,11 @@ export const EditorBtns: React.FC = () => {
         placeColor: obj.placeColor,
         width: obj.width,
         height: obj.height,
+        imageUrl: obj?._element?.currentSrc ?? null,
         radius: isCircle(obj) ? obj.radius : null,
         fill: obj.fill?.toString(),
         strokeWidth: obj.strokeWidth,
+        stroke: obj.stroke,
         type: obj.type,
         left: obj.left,
         top: obj.top,

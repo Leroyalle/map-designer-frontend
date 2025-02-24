@@ -26,6 +26,7 @@ export const useInitCanvasEdit = (
       image.addEventListener('load', () => {
         const fabricImage = new FabricImage(image, {
           selectable: false,
+          evented: false,
           name: 'background',
         });
         initCanvas.add(fabricImage);

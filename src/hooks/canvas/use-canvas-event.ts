@@ -17,8 +17,7 @@ type FabricEvent = Partial<TEvent<TPointerEvent>> & {
 export const useCanvasEvents = (
   canvas: FabricCanvas | null,
   setSelectedObject: (object: FabricObject | null) => void,
-
-  isViewMode?: boolean,
+  isViewMode = false,
 ) => {
   const isSpacePressed = useRef(false);
   const lastPoint = useRef<Point | null>(null);
@@ -57,6 +56,7 @@ export const useCanvasEvents = (
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.code === 'Space') {
         isSpacePressed.current = true;
+        canvas.selection = false;
       }
     };
 
