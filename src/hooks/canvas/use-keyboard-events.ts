@@ -1,5 +1,5 @@
 'use client';
-import { handleCopy, handleDelete, handlePaste } from '@/lib';
+import { handleCopy, handleDelete, handlePaste, handleRedo, handleUndo, saveState } from '@/lib';
 import { Canvas } from 'fabric';
 import { RefObject, useEffect, useRef, useState } from 'react';
 
@@ -9,39 +9,25 @@ export const useKeyboardEvents = (
   canvas: Canvas | null,
 ) => {
   const [isCtrlPressed, setIsCtrlPressed] = useState(false);
-  const offset = useRef<number>(10);
 
+  const offset = useRef<number>(10);
   const history = useRef<string[]>([]);
   const redoStack = useRef<string[]>([]);
+  const isSaving = useRef(false);
 
-  const isSuppressingSave = useRef(false);
-
-  const saveState = () => {
-    if (!canvas || isSuppressingSave.current) return;
-
-    const currentState = JSON.stringify(canvas.toJSON());
-
-    if (
-      history.current.length === 0 ||
-      history.current[history.current.length - 1] !== currentState
-    ) {
-      history.current.push(currentState);
-      redoStack.current = [];
-      console.log(history.current);
-    }
+  const handleSaveState = () => {
+    saveState(isSaving, history, redoStack, canvas);
   };
 
   useEffect(() => {
     if (!canvas) return;
-
-    canvas.on('object:added', saveState);
-    canvas.on('object:modified', saveState);
-    canvas.on('object:removed', saveState);
-
+    canvas.on('object:added', handleSaveState);
+    canvas.on('object:modified', handleSaveState);
+    canvas.on('object:removed', handleSaveState);
     return () => {
-      canvas.off('object:added', saveState);
-      canvas.off('object:modified', saveState);
-      canvas.off('object:removed', saveState);
+      canvas.off('object:added', handleSaveState);
+      canvas.off('object:modified', handleSaveState);
+      canvas.off('object:removed', handleSaveState);
     };
   }, [canvas]);
 
@@ -67,39 +53,12 @@ export const useKeyboardEvents = (
         handlePaste(canvas, offset);
       }
 
-      if (e.code === 'KeyZ' && isCtrlPressed && history.current.length > 0) {
-        console.log(history.current);
-        isSuppressingSave.current = true;
-
-        redoStack.current.push(history.current.pop()!);
-        const prevState = JSON.parse(history.current[history.current.length - 1]);
-        console.log('prevState', prevState);
-
-        if (prevState) {
-          canvas
-            .loadFromJSON(prevState)
-            .then(() => {
-              console.log(canvas);
-              canvas.renderAll();
-              isSuppressingSave.current = false;
-            })
-            .catch((error) => {
-              console.error('Ошибка при загрузке состояния:', error);
-              isSuppressingSave.current = false;
-            });
-        }
+      if (e.code === 'KeyZ' && isCtrlPressed && !e.shiftKey && history.current.length > 0) {
+        handleUndo(isSaving, history, redoStack, canvas);
       }
 
-      if (e.code === 'KeyY' && isCtrlPressed && redoStack.current.length > 0) {
-        isSuppressingSave.current = true;
-
-        const nextState = JSON.parse(redoStack.current.pop()!);
-        history.current.push(nextState);
-
-        canvas.loadFromJSON(nextState).then(() => {
-          canvas.renderAll();
-          isSuppressingSave.current = false;
-        });
+      if (e.code === 'KeyZ' && e.shiftKey && isCtrlPressed && redoStack.current.length > 0) {
+        handleRedo(isSaving, history, redoStack, canvas);
       }
     };
 
