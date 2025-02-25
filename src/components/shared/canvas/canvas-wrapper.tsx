@@ -15,6 +15,7 @@ interface Props {
 }
 
 export const CanvasWrapper: React.FC<Props> = ({ isWatchMode, data, isOwner, className }) => {
+  console.log(isOwner);
   const { data: project, isLoading } = useQuery({
     queryKey: ['project', data.data.id],
     queryFn: () => projectService.getOne(data.data.id),

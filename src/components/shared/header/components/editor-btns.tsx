@@ -1,6 +1,6 @@
 import { Button, Typography } from '@/components/ui';
 import { usePublishProject } from '@/hooks/project';
-import { getSingleId, isCircle } from '@/lib';
+import { getSingleId, isCircle, isImage } from '@/lib';
 import { useCanvasSlice } from '@/store';
 import { CanvasProjectItem, NavRoutesEnum } from '@/types';
 import { Eye } from 'lucide-react';
@@ -37,7 +37,9 @@ export const EditorBtns: React.FC = () => {
         placeColor: obj.placeColor,
         width: obj.width,
         height: obj.height,
-        imageUrl: obj?._element?.currentSrc ?? null,
+        originX: obj.originX,
+        originY: obj.originY,
+        imageUrl: isImage(obj) ? obj._element?.src : null,
         radius: isCircle(obj) ? obj.radius : null,
         fill: obj.fill?.toString(),
         strokeWidth: obj.strokeWidth,

@@ -16,7 +16,6 @@ export const CanvasFieldEdit: React.FC<Props> = ({ project, className }) => {
   const { canvasTransform } = useCanvasInteractions(containerRef);
   useCanvasEvents(canvas, (object) => setSelectedObject(object));
   useInitCanvasEdit(canvasRef, project);
-  useCanvasEvents(canvas, (object) => setSelectedObject(object));
 
   useEffect(() => {
     if (containerRef.current) {
