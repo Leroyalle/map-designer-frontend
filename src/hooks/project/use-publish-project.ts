@@ -15,7 +15,10 @@ export const usePublishProject = () => {
     onError: (error) => {
       toastMessageHandler(error);
     },
-    onSettled: () => queryClient.invalidateQueries({ queryKey: ['projects'] }),
+    onSettled: (project) => {
+      queryClient.invalidateQueries({ queryKey: ['projects'] });
+      queryClient.invalidateQueries({ queryKey: ['project', project?.data.id] });
+    },
   });
 
   return {

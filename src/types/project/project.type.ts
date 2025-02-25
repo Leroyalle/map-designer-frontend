@@ -1,4 +1,4 @@
-import { TOriginX, TOriginY } from 'fabric';
+import { TFiller, TOriginX, TOriginY } from 'fabric';
 import { User } from '../user';
 
 export type ProjectResponse<T = void> = {
@@ -83,7 +83,7 @@ export type CanvasProjectItem = {
   imageUrl: string | null;
   radius: number | null;
   fill?: string;
-  stroke: string;
+  stroke: string | TFiller | null;
   strokeWidth: number;
   type: string;
   left: number;
