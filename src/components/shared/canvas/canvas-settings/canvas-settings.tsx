@@ -23,7 +23,6 @@ export const CanvasSettings: React.FC<Props> = ({ className }) => {
       canvas.renderAll();
     }
   }, [imageOpacity, canvas]);
-
   if (!canvas) {
     return null;
   }

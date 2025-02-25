@@ -8,10 +8,15 @@ export const handleUndo = (
   canvas: Canvas,
 ) => {
   isSaving.current = true;
-  redoStack.current.push(history.current.pop()!);
+
   const prevState = JSON.parse(history.current[history.current.length - 1]);
+  const currentState = history.current.pop() as string;
+  redoStack.current = [...redoStack.current, currentState];
+
   if (prevState) {
     canvas.loadFromJSON(prevState).then(() => {
+      console.log('prevState', prevState);
+      console.log('canvas after', canvas);
       canvas.renderAll();
       isSaving.current = false;
     });
