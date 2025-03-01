@@ -11,7 +11,6 @@ export const saveState = (
   canvas.forEachObject((obj) => {
     obj.toObject = ((toObject) =>
       function (this: FabricObject) {
-        console.log('this', this);
         return {
           ...toObject.call(this),
           selectable: this.selectable,
@@ -26,13 +25,11 @@ export const saveState = (
         };
       })(obj.toObject);
   });
-  console.log('canvas before save last obj', canvas._objects[canvas._objects.length - 1]);
+
   const currentState = JSON.stringify(canvas.toJSON());
-  console.log('history before', history.current);
-  console.log('canvas save all objs', canvas._objects);
+
   if (history.current.length === 0 || history.current[history.current.length - 1] != currentState) {
     history.current = [...history.current, currentState];
-    console.log('history after', history.current);
 
     redoStack.current = [];
   }

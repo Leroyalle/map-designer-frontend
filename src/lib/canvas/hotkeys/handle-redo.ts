@@ -13,9 +13,6 @@ export const handleRedo = (
 
   if (nextState) {
     canvas.loadFromJSON(nextState).then(() => {
-      console.log('nextState', nextState);
-      console.log('canvas', canvas);
-
       canvas.renderAll();
       isSaving.current = false;
     });

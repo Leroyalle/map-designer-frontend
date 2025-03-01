@@ -16,8 +16,6 @@ export const handleUndo = (
 
   if (prevState) {
     canvas.loadFromJSON(prevState).then(() => {
-      console.log('prevState', prevState);
-      console.log('canvas after', canvas._objects);
       canvas.renderAll();
       isSaving.current = false;
     });

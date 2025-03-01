@@ -8,6 +8,7 @@ import { mapDescription, TMapDescSchema } from './schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useCanvasSlice } from '@/store';
 import { toast } from 'sonner';
+import { FabricObject, Group } from 'fabric';
 
 interface Props {
   className?: string;
@@ -35,6 +36,7 @@ export const ObjectParams: React.FC<Props> = ({ className }) => {
 
   useEffect(() => {
     if (selectedObject) {
+      console.log('selectedObject', selectedObject);
       form.setValue('name', selectedObject.get('name') || '');
       form.setValue('desc', selectedObject.get('desc') || '');
       form.setValue('shortDesc', selectedObject.get('shortDesc') || '');
@@ -47,7 +49,18 @@ export const ObjectParams: React.FC<Props> = ({ className }) => {
   const errorMap = form.formState.errors.mapType;
 
   const onSubmit = (data: TMapDescSchema) => {
+    if (!selectedObject || !canvas) return;
+    if (selectedObject.type === 'group') {
+      const group = selectedObject as Group;
+
+      group.forEachObject((object: FabricObject) => {
+        console.log('sdas', object);
+        object.set({ text: data.name, ...data });
+      });
+    }
     selectedObject?.set({ ...data });
+    canvas.renderAll();
+
     toast.success(`Объект ${data.name} сохранен`);
   };
 

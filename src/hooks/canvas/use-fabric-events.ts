@@ -48,7 +48,13 @@ export const useFabricEvents = (
       );
     };
     const onMouseUp = () => {
-      handleStopDrawShape(activeToolRef, setSelectedObject, setSelectedTool, selectedTool.type);
+      handleStopDrawShape(
+        activeToolRef,
+        setSelectedObject,
+        setSelectedTool,
+        selectedTool.type,
+        canvas,
+      );
     };
     const onRotate = (
       e: BasicTransformEvent<TPointerEvent> & {
