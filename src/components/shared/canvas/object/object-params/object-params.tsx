@@ -36,6 +36,7 @@ export const ObjectParams: React.FC<Props> = ({ className }) => {
 
   useEffect(() => {
     if (selectedObject) {
+      console.log('canvas', canvas);
       console.log('selectedObject', selectedObject);
       form.setValue('name', selectedObject.get('name') || '');
       form.setValue('desc', selectedObject.get('desc') || '');

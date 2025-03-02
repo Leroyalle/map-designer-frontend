@@ -1,4 +1,14 @@
-import { Rect, Line, Ellipse, FabricImage, Image } from 'fabric';
+import {
+  Rect,
+  Line,
+  Ellipse,
+  FabricImage,
+  Image,
+  GroupProps,
+  Group,
+  FabricObject,
+  Text,
+} from 'fabric';
 import { generateCanvasId } from './generate-canvas-id';
 
 export class ShapeFactory {
@@ -29,12 +39,29 @@ export class ShapeFactory {
       ...config,
     });
   }
+  static createGroup(objects: FabricObject[], config: Partial<GroupProps>) {
+    return new Group(objects, {
+      canvasId: generateCanvasId(),
+      originY: 'center',
+      originX: 'center',
+      noScaleCache: false,
+      ...config,
+    });
+  }
+  static createText(text: string, config: Partial<Text>) {
+    return new Text(text, {
+      canvasId: generateCanvasId(),
+      originY: 'center',
+      originX: 'center',
+      noScaleCache: false,
+      ...config,
+    });
+  }
 
   static createImg(image: string, config: Partial<FabricImage>) {
-    return new Promise<Image>((resolve, reject) => {
+    return new Promise<Image>((resolve) => {
       const imageElem = document.createElement('img');
       imageElem.src = image;
-
       imageElem.onload = () => {
         resolve(
           new FabricImage(imageElem, {
@@ -44,10 +71,6 @@ export class ShapeFactory {
             ...config,
           }),
         );
-      };
-
-      imageElem.onerror = (error) => {
-        reject(new Error(`Ошибка загрузки изображения: ${error}`));
       };
     });
   }
