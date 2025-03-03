@@ -51,8 +51,6 @@ export class ShapeFactory {
   static createText(text: string, config: Partial<Text>) {
     return new Text(text, {
       canvasId: generateCanvasId(),
-      originY: 'center',
-      originX: 'center',
       noScaleCache: false,
       ...config,
     });

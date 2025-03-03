@@ -12,7 +12,8 @@ export const handleStopDrawShape = (
   canvas: Canvas,
 ) => {
   if (!activeToolRef.current) return;
-  if (activeToolRef.current?.originX !== 'center' || activeToolRef.current?.originY !== 'center') {
+
+  if (activeToolRef.current.originX !== 'center' || activeToolRef.current.originY !== 'center') {
     if (shapeType === 'door' || shapeType === 'elevator' || shapeType === 'ladder') {
       activeToolRef.current?.set({
         top:

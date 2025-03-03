@@ -17,7 +17,9 @@ export const handleStartDrawShape = (
     canvas.requestRenderAll();
   }
   if (!selectedTool) return;
+
   drawShapeFirstPoint(e, selectedTool.type, activeToolRef, startPoint, canvas);
+
   if (e.target) {
     e.target.selectable = true;
     e.target.evented = true;

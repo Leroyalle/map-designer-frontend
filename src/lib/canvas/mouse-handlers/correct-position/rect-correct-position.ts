@@ -4,17 +4,25 @@ import { RefObject } from 'react';
 
 export const rectCorrectPosition = (activeToolRef: RefObject<FabricObject>, canvas: Canvas) => {
   const fontSize = Math.min(activeToolRef.current.width / 5, 20);
+
+  const boundingRect = activeToolRef.current.getBoundingRect();
   const textShape = ShapeFactory.createText(`${activeToolRef.current.name}`, {
     fontFamily: 'Delicious',
-    left: activeToolRef.current.left + activeToolRef.current.width / 2,
-    top: activeToolRef.current.top + activeToolRef.current.height / 2,
+    left: boundingRect.left + boundingRect.width / 2,
+    top: boundingRect.top + boundingRect.height / 2,
+    evented: false,
+    originY: 'center',
+    originX: 'center',
+    selectable: false,
     fontSize,
   });
+
   const group = ShapeFactory.createGroup([activeToolRef.current, textShape], {
-    left: activeToolRef.current.left,
-    top: activeToolRef.current.top,
+    left: boundingRect.left,
+    top: boundingRect.top,
     name: activeToolRef.current.name,
   });
+
   activeToolRef.current = group;
   group.set({
     top: group.top + group.strokeWidth / 2 + group.height / 2,

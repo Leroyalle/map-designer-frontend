@@ -13,7 +13,6 @@ export async function drawShapeFirstPoint(
 ) {
   const pointer = canvas.getPointer(elem.e);
   canvas.selection = false;
-
   const shape = await selectDrawShape(shapeType, pointer, canvas);
   if (shape) {
     canvas.add(shape);
