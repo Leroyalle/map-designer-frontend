@@ -8,8 +8,6 @@ export function shapeRotation(
   isCtrlPressed: boolean,
   canvas: Canvas,
 ) {
-  const isGroup = e.target.type === 'group';
-  console.log(e.target);
   if (isCtrlPressed) {
     const allowedAngles = [0, 45, 90, 135, 180, 225, 270, 315];
     const object = e.target;
@@ -29,7 +27,7 @@ export function shapeRotation(
       });
     }
   }
-  if (isGroup) {
+  if (e.target.type === 'group') {
     const target = e.target as Group;
     target._objects[1].set({
       angle: -e.target.angle,

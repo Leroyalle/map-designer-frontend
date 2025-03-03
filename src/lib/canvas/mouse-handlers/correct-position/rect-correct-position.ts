@@ -14,6 +14,7 @@ export const rectCorrectPosition = (activeToolRef: RefObject<FabricObject>, canv
     originY: 'center',
     originX: 'center',
     selectable: false,
+
     fontSize,
   });
 
@@ -21,6 +22,15 @@ export const rectCorrectPosition = (activeToolRef: RefObject<FabricObject>, canv
     left: boundingRect.left,
     top: boundingRect.top,
     name: activeToolRef.current.name,
+  });
+  group.on('scaling', () => {
+    textShape.set({
+      scaleX: 1 / group.scaleX,
+      scaleY: 1 / group.scaleY,
+      flipX: false,
+      flipY: false,
+    });
+    canvas.renderAll();
   });
 
   activeToolRef.current = group;
