@@ -27,7 +27,12 @@ export const CanvasFieldEdit: React.FC<Props> = ({ project, className }) => {
   }, [canvasTransform]);
 
   return (
-    <div className={clsx('w-fit p-4 select-none', className)} ref={containerRef}>
+    <div
+      className={clsx(
+        'w-full h-full flex items-center justify-center select-none pt-[66px] overflow-hidden',
+        className,
+      )}
+      ref={containerRef}>
       <canvas id="canvas" ref={canvasRef} />
     </div>
   );

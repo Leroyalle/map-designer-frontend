@@ -10,7 +10,7 @@ export function updateImage(
 ) {
   if (!(activeTool instanceof FabricImage)) return;
 
-  const isLadder = shapeType === 'ladder';
+  const isLadder = shapeType === 'ladder' || shapeType === 'window';
   const currentWidth = Math.abs(deltaX);
   const currentHeight = Math.abs(deltaY);
 

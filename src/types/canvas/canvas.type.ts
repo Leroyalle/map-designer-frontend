@@ -6,4 +6,10 @@ export type ShapeType =
   | 'window'
   | 'ladder'
   | 'elevator'
-  | 'image';
+  | 'image'
+  | 'tool-undo'
+  | 'tool-redo'
+  | 'selector-tool'
+  | 'move-tool'
+  | 'spot'
+  | 'hydrant';

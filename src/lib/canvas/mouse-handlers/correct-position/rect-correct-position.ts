@@ -8,8 +8,8 @@ export const rectCorrectPosition = (activeToolRef: RefObject<FabricObject>, canv
   const boundingRect = activeToolRef.current.getBoundingRect();
   const textShape = ShapeFactory.createText(`${activeToolRef.current.name}`, {
     fontFamily: 'Delicious',
-    left: boundingRect.left + boundingRect.width / 2,
-    top: boundingRect.top + boundingRect.height / 2,
+    left: boundingRect.left + activeToolRef.current.width / 2,
+    top: boundingRect.top + activeToolRef.current.height / 2,
     evented: false,
     originY: 'center',
     originX: 'center',

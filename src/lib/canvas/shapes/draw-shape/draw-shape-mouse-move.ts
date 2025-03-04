@@ -32,6 +32,7 @@ export function drawShapeMouseMove(
     case 'door':
     case 'elevator':
     case 'ladder':
+    case 'window':
       if (activeTool instanceof FabricImage) {
         updateImage(activeTool, deltaX, deltaY, startPoint, shapeType);
       }
