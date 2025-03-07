@@ -1,6 +1,7 @@
 import { Canvas, FabricObject } from 'fabric';
 import { ShapeFactory } from '../../shapes';
 import { RefObject } from 'react';
+import { getRandomColor } from '@/lib/shared';
 
 export const rectCorrectPosition = (activeToolRef: RefObject<FabricObject>, canvas: Canvas) => {
   const fontSize = Math.min(activeToolRef.current.width / 5, 20);
@@ -22,6 +23,7 @@ export const rectCorrectPosition = (activeToolRef: RefObject<FabricObject>, canv
     left: boundingRect.left,
     top: boundingRect.top,
     name: activeToolRef.current.name,
+    placeColor: getRandomColor(),
   });
   group.on('scaling', () => {
     textShape.set({

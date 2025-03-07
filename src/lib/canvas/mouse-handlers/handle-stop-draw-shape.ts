@@ -60,6 +60,8 @@ export const handleStopDrawShape = (
     default:
       break;
   }
+  console.log(activeToolRef.current);
+
   activeToolRef.current = null;
   setSelectedObject(null);
   setSelectedTool(null);

@@ -8,7 +8,6 @@ export const startPan = (
   lastPoint: RefObject<Point | null>,
 ) => {
   if (event.e.button !== 0 || !isSpacePressed.current) return;
-
   event.e.preventDefault();
   isPanning.current = true;
   lastPoint.current = new Point(event.e.clientX, event.e.clientY);

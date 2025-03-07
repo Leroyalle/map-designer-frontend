@@ -98,7 +98,6 @@ export const renderItemsOnCanvas = (canvas: Canvas, items: ProjectItem[]) => {
     }
 
     if (fabricObject) {
-      console.log('fabricObject', fabricObject, fabricObject.type);
       canvas.add(fabricObject);
     }
   });

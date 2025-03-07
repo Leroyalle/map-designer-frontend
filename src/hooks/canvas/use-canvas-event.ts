@@ -18,11 +18,11 @@ export const useCanvasEvents = (
   canvas: FabricCanvas | null,
   setSelectedObject: (object: FabricObject | null) => void,
   isViewMode = false,
+  setIsBack: (value: boolean) => void,
 ) => {
   const isSpacePressed = useRef(false);
   const lastPoint = useRef<Point | null>(null);
   const isPanning = useRef(false);
-
   useEffect(() => {
     if (!canvas) return;
     const handleSelectionCreated = (event: FabricEvent) => {
@@ -46,7 +46,9 @@ export const useCanvasEvents = (
     };
 
     const handleContinuePan = (event: TPointerEventInfo<MouseEvent>) => {
-      continuePan(event, isPanning, lastPoint, canvas);
+      if (isPanning.current) {
+        setIsBack(continuePan(event, isPanning, lastPoint, canvas));
+      }
     };
 
     const stopPan = () => {
