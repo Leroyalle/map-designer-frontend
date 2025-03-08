@@ -30,7 +30,9 @@ export const handleStopDrawShape = (
       });
     }
     if (shapeType === 'rect') {
+      console.log(canvas.getObjects());
       activeToolRef.current = rectCorrectPosition(activeToolRef, canvas);
+      console.log(canvas.getObjects());
     }
     activeToolRef.current.set({
       originX: 'center',

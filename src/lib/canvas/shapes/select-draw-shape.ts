@@ -44,6 +44,7 @@ export const selectDrawShape = (
       top: coords.y,
       width: 0,
       height: 0,
+      name,
       ...params,
     });
   }

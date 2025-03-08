@@ -4,13 +4,14 @@ import { RefObject } from 'react';
 import { getRandomColor } from '@/lib/shared';
 
 export const rectCorrectPosition = (activeToolRef: RefObject<FabricObject>, canvas: Canvas) => {
-  const fontSize = Math.min(activeToolRef.current.width / 5, 20);
+  const rect = activeToolRef.current;
+  const fontSize = Math.min(rect.width / 5, 20);
 
-  const boundingRect = activeToolRef.current.getBoundingRect();
-  const textShape = ShapeFactory.createText(`${activeToolRef.current.name}`, {
+  const boundingRect = rect.getBoundingRect();
+  const textShape = ShapeFactory.createText(`${rect.name}`, {
     fontFamily: 'Delicious',
-    left: boundingRect.left + activeToolRef.current.width / 2,
-    top: boundingRect.top + activeToolRef.current.height / 2,
+    left: boundingRect.left + rect.width / 2,
+    top: boundingRect.top + rect.height / 2,
     evented: false,
     originY: 'center',
     originX: 'center',
@@ -18,8 +19,8 @@ export const rectCorrectPosition = (activeToolRef: RefObject<FabricObject>, canv
 
     fontSize,
   });
-
-  const group = ShapeFactory.createGroup([activeToolRef.current, textShape], {
+  console.log(rect);
+  const group = ShapeFactory.createGroup([rect, textShape], {
     left: boundingRect.left,
     top: boundingRect.top,
     name: activeToolRef.current.name,
@@ -42,6 +43,7 @@ export const rectCorrectPosition = (activeToolRef: RefObject<FabricObject>, canv
   });
   canvas.add(group);
   canvas.setActiveObject(group);
+  canvas.remove(rect);
   canvas.renderAll();
   return activeToolRef.current;
 };
