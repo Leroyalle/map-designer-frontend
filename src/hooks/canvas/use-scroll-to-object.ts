@@ -14,6 +14,15 @@ export const useScrollToObject = (
     if (canvas && object) {
       const fabricObject = canvas.getObjects().find((obj) => obj.canvasId === object.canvasId);
       if (fabricObject) {
+        if (fabricObject.stroke === 'black') {
+          fabricObject.set({
+            stroke: '#2bad1a',
+          });
+        } else {
+          fabricObject.set({
+            stroke: 'black',
+          });
+        }
         const centerPoint = fabricObject.getCenterPoint();
         const objX = centerPoint.x;
         const objY = centerPoint.y;
